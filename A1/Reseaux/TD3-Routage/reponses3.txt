@@ -1,0 +1,8 @@
+Envoie de paquet ip de MA a MB 
+
+trame ethernet : source | destination | type de proto | Datagramme IP
+
+duree de vie du di agramme ip par rapport aux nb de routeurs traversés
+
+
+Si on connait pas l'adresse MAC du routeur, on fait requete ARP

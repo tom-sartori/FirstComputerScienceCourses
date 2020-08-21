@@ -1,0 +1,448 @@
+CREATE TABLE # (# NUMBER(#) CONSTRAINT CP_# PRIMARY KEY, 
+# VARCHAR2(#),
+# NUMBER(#)
+CONSTRAINT FK1_# FOREIGN KEY (#) REFERENCES #(#) );
+
+
+- Cas de plusieures clés primaires 
+create table Salle (nums number(2), horaire varchar2(20),
+numf number(6),
+constraint cp_Salle primary Key( nums, horaire) ); 
+
+
+INSERT INTO # 
+VALUES (#,#);
+
+
+SELECT * FROM TAB
+
+
+//Selection
+SELECT *
+FROM <relation><alias>
+WHERE <condition>
+
+	Exemple :
+	SELECT *
+	FROM Pilote NumPl
+	WHERE NumPl=123456
+
+
+//Produit cartésien
+SELECT <Liste d'attributs>
+FROM <relation1, relation2>
+
+	Exemple :
+	SELECT *
+	FROM Pilote, Avion
+
+
+//Jointure
+SELECT *
+FROM <relation1><alias>, <relation2><alias>
+WHERE <condition de jointure>
+
+	Exemple :
+	SELECT *
+	FROM Pilote p, Vol v
+	WHERE p.numpl=v.numpl
+
+
+
+
+
+CREATE TABLE Pilote 
+(NumPl NUMBER(6) CONSTRAINT CP_Pilote PRIMARY KEY, 
+NomPl VARCHAR2(20),
+Adresse VARCHAR2(30),
+Salaire NUMBER(4));
+
+CREATE TABLE Avion (NumAv NUMBER(6)
+CONSTRAINT CP_Avion PRIMARY KEY, 
+TypeAv VARCHAR2(10),
+Capacite NUMBER(3));
+
+CREATE TABLE Vol (NumVol VARCHAR2(6)
+CONSTRAINT CP_Vol PRIMARY KEY, 
+NumPl NUMBER(6),
+NumAv NUMBER(6),
+VilleDep VARCHAR2(12), 
+VilleArr VARCHAR2(12), 
+HD VARCHAR2(6), 
+HA VARCHAR2(6), 
+CONSTRAINT FK1_Vol FOREIGN KEY (NumPl) REFERENCES Pilote(NumPl), 
+CONSTRAINT FK2_Vol FOREIGN KEY (NumAv) REFERENCES Avion(NumAv)); 
+
+
+
+
+
+insert into salle
+values(11, '08h30', 852);
+insert into salle
+values(06, '13h30', 123);
+insert into salle
+values(01, '13h30', 456);
+insert into salle
+values(04, '13h00', 852);
+
+
+insert into film
+values(456, 'Rod Taylor', 'Les oiseaux');
+insert into film 
+values (123, 'Harison Ford', 'Indiana Jones');
+
+
+
+create table film 
+(numf number(6), 
+acteur varchar2(12), 
+titre varchar2 (20),
+constraint cp_film primary key (numf, acteur), 
+constraint fk1_film foreign key (numf) references technique(numf));
+
+create table technique (numf number(6)
+constraint cp_technique primary key, 
+producteur varchar2(20), 
+realisateur varchar2(20));
+
+
+
+BD1 (25/11/2019)
+
+R0 :
+select *
+from film acteur 
+where titre='Indiana Jones'
+
+R1 : 
+select s.nums, s.horaire
+from film f, salle s
+where f.numf = s.numf
+and 
+f.titre='Indiana Jones'
+
+R2 :
+select titre
+from film f, technique t
+where f.numf = t.numf
+and 
+t.realisateur = 'Hitchcok'
+
+R3 :
+select titre
+from film f 
+where f.numf not in (select s.numf
+from salle s )
+
+R4 :
+select realisateur
+from technique t 
+where realisateur=producteur
+
+R5 :
+select acteur
+from technique t, film f
+where t.realisateur = 'Hitchcok'
+and  t.numf = f.numf
+group by acteur
+having count (distinct t.numf) = (select count(f.numf)
+from technique t
+where t.realisateur = 'Hitchcok'); 
+
+R6 : 
+(select titre
+from technique t, film f
+where realisateur = 'Hitchcok' 
+and 
+t.numf = f.numf)
+union
+(select titre
+from technique t, film f
+where producteur = 'Hitchcok'
+and 
+t.numf = f.numf)
+
+
+
+
+
+
+TP 02.12.2019
+
+
+create table agence (Num_Agence number(6) constraint cp_agence primary key, 
+Nom varchar2 (20), 
+ville varchar2 (30), 
+actif number (10)
+); 
+
+
+create table client (num_client number(6) constraint cp_client primary key, 
+Nom varchar2 (20), 
+ville varchar2 (30)
+); 
+
+create table compte (num_compte number(6) constraint cp_compte primary key, 
+num_agence number (6), 
+num_client number (6),
+solde number (6), 
+constraint fk1_agence foreign key (num_agence) references agence(num_agence), 
+constraint fk2_client foreign key (num_client) references client(num_client)
+); 
+
+
+create table emprunt (num_emprunt number(6) constraint cp_emprunt primary key, 
+num_agence number (6), 
+num_client number (6),
+montant number (6), 
+constraint fk3_agence foreign key (num_agence) references agence(num_agence), 
+constraint fk4_client foreign key (num_client) references client(num_client)
+); 
+
+
+
+insert into agence 
+values (123, 'la rochelle', ' la rochelle', 11000); 
+insert into agence
+values (234, 'paris-etoile', 'paris', 45000); 
+insert into agence 
+values (777, 'comedie', 'montpellier', 33000); 
+insert into agence
+values (555, 'orsay', 'paris', 85000); 
+insert into agence 
+values (258, 'rambuteau', 'paris', 62000); 
+insert into agence
+values (635, 'bastille', 'paris', 73000); 
+
+
+insert into client values
+(01, 'Dupont', 'paris'); 
+insert into client values
+(02, 'prevert', 'paris'); 
+insert into client values
+(03, 'claude', 'montpellier'); 
+insert into client values 
+(04, 'martin', 'paris');
+insert into client values 
+(05, 'pays', 'nullepart'); 
+insert into client values 
+(06, 'jacques', 'paris'); 
+insert into client values
+(07, 'monod', 'paris');
+
+
+insert into compte values 
+(111, 123, 05, 100000); 
+insert into compte values
+(222, 555, 01, 50000); 
+insert into compte values
+(333, 234, 03, 2000); 
+insert into compte values
+(444, 258, 06, 6200); 
+insert into compte values
+(555, 777, 02, 3000); 
+insert into compte values
+(666, 777, 05, 600000); 
+insert into compte values
+(777, 123, 04, 5000); 
+insert into compte values
+(888, 234, 01, 505);
+
+
+insert into emprunt values 
+(9999, 123, 05, 8000); 
+insert into emprunt values
+(8888, 555, 01, 0); 
+insert into emprunt values 
+(7777, 234, 03, 8400); 
+insert into emprunt values
+(6666, 123, 05, 75000); 
+insert into emprunt values 
+(5555, 258, 06, 300); 
+insert into emprunt values
+(4444, 123, 01, 100); 
+
+
+
+
+1. 
+select nom
+from agence a, compte c
+where a.num_agence = c.num_agence
+
+2. 
+select nom
+from client 
+where num_client in
+(select num_client 
+from  compte
+where num_agence in
+(select num_agence
+from agence
+where nom='la rochelle'));
+
+3. 
+(select nom
+from client 
+where num_client in
+(select num_client 
+from  emprunt
+where num_agence in
+(select num_agence
+from agence
+where nom='la rochelle')))
+union 
+(select nom
+from client 
+where num_client in
+(select num_client 
+from  compte
+where num_agence in
+(select num_agence
+from agence
+where nom='la rochelle')));
+
+
+4. 
+(select nom
+from client 
+where num_client in
+(select num_client 
+from  emprunt
+where num_agence in
+(select num_agence
+from agence
+where nom='la rochelle')))
+intersect
+(select nom
+from client 
+where num_client in
+(select num_client 
+from  compte
+where num_agence in
+(select num_agence
+from agence
+where nom='la rochelle')));
+
+
+5. 
+(select nom
+from client 
+where num_client in
+(select num_client 
+from  compte
+where num_agence in
+(select num_agence
+from agence
+where nom='la rochelle')))
+minus
+(select nom
+from client 
+where num_client in
+(select num_client 
+from  emprunt
+where num_agence in
+(select num_agence
+from agence
+where nom='la rochelle'))); 
+
+6.
+(select nom,ville 
+from client)
+minus
+((select nom,ville 
+from client)
+minus
+(select nom, ville 
+from client c, compte co
+where c.num_client=co.num_client));
+
+7.
+select nom, ville
+from client 
+where num_client in
+(select num_client 
+from  compte
+where num_agence in
+(select num_agence
+from agence
+where nom='paris-etoile'));
+
+8.
+select nom from client, compte 
+where client.num_client = compte.num_client and num_agence 
+in (select num_agence from client, compte 
+where client.num_client = compte.num_client and nom ='claude')
+
+9. 
+select nom from agence where actif>all (
+select actif from agence where nom ='paris-etoile'); 
+
+10.
+select nom from client where num_client in (
+select num_client from compte where num_agence in (
+select num_agence from agence where ville ='paris'))
+
+
+
+
+
+insert into mission values 
+(111, 'etats unis', '20/05/2010', '30/06/2011', 'recherche', 01); 
+insert into mission values 
+(222, 'chine', '24/01/2016', '02/10/2018', 'visite', 02); 
+insert into mission values 
+(333, 'chine', '30/08/2018', '25/02/2020', 'visite', 01); 
+insert into mission values 
+(444, 'norvege', '26/04/2012', '12/12/2012', 'recherche', 03); 
+insert into mission values 
+(555, 'chili', '01/03/2017', '04/02/2019', 'destruction', 04); 
+
+
+R3:
+select nom, prenom from chercheur where numc in (
+select numc from mission where numis in (
+select numis from visite, mission
+where chercheur.numc=mission.numc and nom='dupont'))
+
+
+
+
+
+
+
+
+
+
+
+alter table chercheur add adresse varchar2(20);
+
+
+
+
+
+
+
+
+
+
+
+ '5 rue de henry', '4 avenue jean', '5 rue flamand', '7 rue des BD');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

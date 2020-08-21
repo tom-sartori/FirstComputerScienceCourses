@@ -1,0 +1,46 @@
+TP3 - Routage, partie 2
+
+La commande "route" ne fonctionne pas fonctionner. Il semble qu'il faille utiliser la commande "netstat -nr" mais le resultat n'est vraimet pas très clair. 
+
+
+Les adresses commencent par 192 semblent être privés et uniquement dans le réseau local. L'adresse 162 est celle du serveur WEB. 
+Le serveur WEB possède cette adresse de classe B pour qu'il soit visible de l'extérieur du réseau. 
+
+
+Le DNS sert principalement à traduire le nom de domaine en adresse IP. 
+Le DHCP est un protocole qui sert a attribuer automatiquement une adresse IP et un masque à une machine du réseau. 
+
+
+Sur la partie droite du réseau, on pourrait utiliser des adresses privées de classe C donc dans ce cas, forcement 192.168.xxx.xxx. Pour chaque salle, on pourrait attribuer un numéro et ainsi avoir 192.168.2 pour la compta, 192.168.3 pour le secrétariat... 
+Le routeur prendra l'adresse 192.168.1
+
+
+Pour le minimum, pour une table de routage, il faudra l'adresse de redirection générale vers toutes les directions donc 0.0.0.0 . Il faudra aussi l'adresse du réseau local. 
+
+Routeur 
+
+D		M		P
+0.0.0.0		0.0.0.0		Internet
+192.178.0.0	255.255.0.0	192.168.1.254
+162.38.222.1	255.25.255.255	162.38.222.x
+162.38.222.0	255.255.255.255	162.38.222.254
+
+
+
+Pour les trois questions, le routage est fonctionnel et passant par la table. 
+
+
+
+
+Table de routage de MA : 
+
+D 		M 		P 
+0.0.0.0 	0.0.0.0		Internet
+193.2.2.0 			193.2.2.3
+
+
+
+
+
+11100110
+

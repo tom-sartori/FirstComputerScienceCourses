@@ -1,0 +1,35 @@
+TD4 - TCP
+
+CRC = correction d'éventuelles erreurs de trame
+
+TCP en couche 4
+
+
+UDP a le même but que TCP mais en beaucoup plus simple et rapide mais moins fiable. Les messages sont envoyés sans entête (ou très simple entete), sans accusé de reception et l'envoi est individuel pour chaque element. On ne sait donc pas si le message a bien été envoyé ou pas. 
+
+
+Communication TCP : 
+SYN SYN/ACK ACK    Three Way Handshake, Permet de créer la communication virtuelle
+Puis, envoi de messages du port A ou B grâce à ACK. Message envoyé en bidirectionnel pour plus de fiabilité. 
+FIN a la fin pour finir la communication
+
+
+Contenu minimal de la table de routage de la machine 110.10.111.2
+
+0.0.0.0 	0.0.0.0 	110.10.1.O
+110.10.0.0		255.255.0.0	110.10.111.2
+
+
+Ordre chronologique des trames
+ARP 	00600861047b		ffffffffffff	//Demande adresse mac du routeur
+ARP	000102aff5e2		00600861047b	//Reponse du routeur
+DNS	110.10.111.2 : 1234	110.10.1.1 : 53		//Demande adresse ip destination
+DNS 	110.10.1.1 : 53		110.10.111.2 : 1234 	//Permet de connaitre l'adresse ip de destination
+TCP 	110.10.111.2 : 1234	163.34.45.1 : 80	Flag=syn Seq=0 Ack=0 Win=64240 Len=0	//Synchronisation
+TCP 	110.10.111.2 : 1234	163.34.45.1 : 80	Flag=ack, syn Seq=0 Ack=1 Win=5840 Len=0
+TCP 	110.10.111.2 : 1234	163.34.45.1 : 80	Flag=ack Seq=1 Ack=1 Win=64240 Len=0	//Acquitement
+HTTP 	110.10.111.2 : 1234	163.34.45.1 : 80	Get /http://...		//Demande page html
+TCP 	163.34.45.1 : 80	110.10.111.2 : 1234	Flag=ack Seq=1 Ack=615 Win=6754 Len=0	//Confirmation requête reçue
+HTTP	163.34.45.1 : 80	110.10.111.2 : 1234	HTTP/1.1 304 Not Modified	//Reponse serveur
+TCP 	110.10.111.2 : 1234	163.34.45.1 : 80	Flag=fin,ack Seq=615 Ack=145 Win=64240 Len=0	//Reponse recue
+

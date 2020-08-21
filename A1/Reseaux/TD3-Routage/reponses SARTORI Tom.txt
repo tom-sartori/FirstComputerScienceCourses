@@ -1,0 +1,66 @@
+TD3 - Routage IP
+SARTORI Tom
+
+
+Creation trame IP mais cherche adresse MAC du routeur
+La machine envoie en broadcast un paquet IP ARP encapsulé dans trame ethernet pour connaitre l'adresse mac du routeur qui lui même connait son adresse mac et qui donc renvoie son adresse en broadcast. 
+L'utilisateur peut donc maintenant envoyer une trame ethernet avec paquet ip encapsulé, au routeur. Grace à la table de routage, il comprend où envoyer le paquet. 
+Ce processus se répète jusqu'à arriver au bon router (bonne adresse). Si le routeur ne connait pas l'adresse voulue, il réutilise le protocole ARP. 
+
+
+
+A. La commande ifconfig permet de connaitre la configuration IP de la machine. On peut observer l'adresse IP de notre machine, les différents ports de connexion ainsi que les adresses DNS. Cependant, cette commande ne s'affichait pas comme linux sur mon mac. 
+
+La commande rout ne semble pas vraiment fonctionner sur mac (du moins sur le mien). Mais grace à cette commande, on devrait pouvoir observer différentes caractéristiques de la machine. 
+
+B. arp permet de connaitre les utilisateurs présents sur notre réseau. 
+
+C. 
+Pour www.umontpellier.fr
+	10 octets : pas d'affichage du temps
+	100 octets : min/avg/max/stddev = 43.935/48.839/59.408/4.903 ms 
+	1000 octets : min/avg/max/stddev = 51.751/108.654/254.097/68.031 ms
+	La différence est significative
+
+Pour www.google.fr
+	100 octets : min/avg/max/stddev = 38.028/40.630/44.152/2.194 ms
+	1000 octets : min/avg/max/stddev = 46.262/55.936/85.484/11.299 ms
+	La différence est peu significative
+
+La temps dépend donc bien de la taille des paquets. La distance devrait logiquement également avoir un impact mais elle ne semble pas significative dans cet exemple. 
+
+
+D. traceroute
+162.38.221.50 -> mail.iutmontp.univ-montp2.fr, localisation : montpellier, 17 routeurs
+www.umontpellier.fr -> Après 35 routeurs, pas de fin
+www.parisdescartes.fr -> frnt-web.parisdescartes.fr (193.51.86.27), localisation : France, 15 routeurs
+www.google.fr -> par10s38-in-f3.1e100.net (172.217.18.195), localisation : Mountain View, USA, 12 routeurs
+www.google.com -> par10s33-in-f4.1e100.net (216.58.201.228), localisation : Mountain View, USA, 12 routeurs
+216.239.53.101 -> pas de fin après 20 routeurs, localisation : USA
+www.yahoo.com -> media-router-fp1.prod1.media.vip.ir2.yahoo.com (87.248.98.7), localisation : UK, 13 routeurs
+150.22.120.10 -> Pas de fin après 15 routeurs
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

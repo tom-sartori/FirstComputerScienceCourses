@@ -1,0 +1,161 @@
+TD2 : Ethernet (Partie 2) SARTORI Tom
+
+
+VRC : Vertical Rendundancy Check, consiste à ajouter un bit supplémentaire à un nombre de bits donné. C'est le bit de parité et cela a pour but de simplifier la reconnaissance du mot en sachant directement si le nombre de bits du mot est pair ou impair. 
+Si impair, alors on met 1. Si pair, alors 0. 
+
+LRC : Contrôle de Redondance Longitudinale, contrôle tous les blocs de caractère. 
+
+
+
+
+EX 1 : 
+
+AC 93 AC A3
+
+Ce message est composé de quatre caractères. 
+
+AC -> 1010 1100
+93 -> 1001 0011
+AC -> 1010 1100
+A3 -> 1010 0011
+
+Chaque caractère possède autant de 0 que de 1. Les bits de parité sont bons. 
+Les bits VRC sont donc bons. 
+
+Après la suppression des bits VRC, le message est : 
+1010110 1001001 1010110 1010001
+   V       I       V       A
+
+
+
+
+Ex 2 : 
+Avec VRC et LRC
+
+Le message contient une faute car le bite de parité n'est pas bon. 
+
+On corrige donc le message à la l3 c2. 
+
+10011001 	10011001	L
+10000010	10000010	A
+00000001-	00000001	espace
+10011010	10011010	M
+10101010	10101010	U
+10100110   -> 	10100110   -> 	S
+10010010	10010010	I
+10000111	10000111	C
+10000010	10000010	A
+01000010	01000010	!
+00011001	00011001
+ ¦
+
+
+
+
+Ex 3 : 
+Message : 10000101001001
+Code gen : 1001
+
+Pour faire le calcul du CRC, il faut faire une division particulière avec le code générateur pour obtenir un reste et l'ajouter au message. 
+
+
+10000101001001
+1001
+
+0001010
+   1001
+
+   001110
+     1001
+
+     01110
+      1001
+
+      01111
+       1001
+
+       01100
+        1001
+
+        01010
+         1001
+
+         00111
+
+
+Reste : 111
+
+Message final : 10000101001001111
+
+
+
+
+
+Ex 2 : Décodage
+Message reçu par le serveur : A9 3E A4 FE
+CRC : 11001
+
+A9 : 1010 1001
+3E : 0011 1110
+A4 : 1010 0100
+FE : 1111 1110
+
+Bloc de controle d'erreur : 1110
+
+Message : 
+1010100100111110101001001111
+
+Regroupement en groupe de 7 bits car les caractères ASCII sont codés ainsi. 
+1010100 1001111 1010100 1001111
+
+Ajout d'un zero (à gauche) pour retrouver la correspondance dans la table ASCII. 
+0101 0100   0100 1111   0101 0100   0100 1111
+  5    4      4    F     5     4      4    F
+
+
+54 -> T
+4F -> O
+
+Message : TOTO
+
+
+
+
+
+Schéma d'un réseau 
+
+
+1. La fibre optique est plus robuste et peut aller très loin sans amplificateur (100 km). 
+De plus, la fibre optique supporte un débit important de 1 GB/s ou plus. 
+Utilisé pour le coeur du réseau. 
+
+2. Le RJ45, utilisé à l'intérieur des entreprises car suffisant. 
+
+Le routeur, permet de connecter une entreprise à l'internet. 
+
+Les switch connectent différents stations, réseaux à l'intérieur d'une entreprise (niveau 2). 
+Ils reçoivent une trame ethernet utilisent une adresse MAC pour le transfert. 
+Ils séparent les domaines de collisions. 
+
+Les hubs sont des petits dispositifs qui transmettent sur plusieurs sorties. 
+
+
+
+-----------------------
+
+Le répéteur répète juste physiquement le message. (niv 1)
+
+Le switch réccupère l'en-tête de la trame ethernet (niv 2) et envoie au bon endroit. 
+Collision différente car tampon qui peut mettre les messages en file d'attente et donc limiter les collisions 
+
+Routeur regarde l'ip de la destination (niv 3) avec une table de routage
+
+
+
+
+
+
+
+
+
