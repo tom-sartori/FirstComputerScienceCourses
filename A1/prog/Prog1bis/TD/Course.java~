@@ -1,0 +1,39 @@
+public class Course {
+
+    private Voiture voit1;
+    private Voiture voit2;
+    private int longueurPiste;
+
+    public Course (Voiture voit1, Voiture voit2, int longueurPiste) {
+	/* pré-requis : longueur Piste > 0
+	 * action : crée une piste de longueur longueurPiste avec voit1 et voit2 au départ
+	 */
+	this.longueurPiste = longueurPiste;
+	this.voit1 = voit1;
+	this.voit2 = voit2;
+    }
+    
+    public String toString() {
+	/* résultat : retourne une chaîne de caractères contenant les caractéristiques
+	 * de this (sous la forme de votre choix)
+	 */
+	return (this.voit1 + " et " + this.voit2 + "sont au départ d'une course de " + this.longueurPiste + " m. ");
+    }
+
+    public Voiture deroulement () {
+	/* pré-requis : this.voit1 et this.voit2 sont sur la ligne de départ
+	 * (à l’origine), prêtes à partir
+	 * action : simule le déroulement d’une course entre this.voit1 et this.voit2
+	 * sur une piste de longueur this.longueurPiste, en affichant à chaque
+	 * étape les 2 voitures, représentées par la première lettre de leur
+	 * nom, à leur position respective, et retourne la voiture gagnante.
+	 */
+
+	while ((!this.voit1.depasse(this.longueurPiste)) || (!this.voit2.depasse(this.longueurPiste)) {
+		System.out.print(voit1.toString2);
+		System.out.print(voit2.toString2);
+	    }
+	    
+	    }
+    }
+}	    

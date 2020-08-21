@@ -1,0 +1,14 @@
+public class Ligne {
+
+    private int numLigne;
+    private String couleurLigne;
+    private int[] tabRames;
+
+    public Ligne (int num, String couleur, int[] tab) {
+
+	this.numLigne = num;
+	this.couleurLigne = couleur;
+	this.tabRames = tab;
+    }
+}
+	    

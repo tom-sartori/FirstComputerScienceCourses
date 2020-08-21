@@ -1,0 +1,9 @@
+public class Rame {
+
+    private int numStation;
+
+    public Rame (int num) {
+
+	this.numStt = num;
+    }
+}

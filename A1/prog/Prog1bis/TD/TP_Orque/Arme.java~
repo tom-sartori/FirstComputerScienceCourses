@@ -1,0 +1,13 @@
+public class Arme {
+
+    private String type;
+
+    private int degat;
+
+    private int touche;
+
+    
+    public Arme () {
+
+	String [] tabType = {"Hache", "Epée", "Matraque"};
+	this.type = tabType[Ut.randomMinMax(0, tabType.length)];

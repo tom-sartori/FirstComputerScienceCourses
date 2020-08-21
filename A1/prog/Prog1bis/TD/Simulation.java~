@@ -1,0 +1,8 @@
+public class Simulation {
+
+    private Ligne[] tabSimu;
+
+    public Simulation (Ligne[] tab) {
+	this.tabSimu = tab;
+    }
+}

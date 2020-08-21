@@ -1,0 +1,9 @@
+public class CheminCarre {
+
+    public static void main (String args[]) {
+
+	Ut.afficher ("n = ");
+	int n = Ut.saisirEntier();
+
+	int [][] mat = new int [n] [n];
+	

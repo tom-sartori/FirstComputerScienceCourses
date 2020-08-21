@@ -1,0 +1,26 @@
+public class EE {
+
+    private int [] ensTab;
+    private int cardinal;
+
+    public EE (int max) {
+	this.ensTab = new int[max];
+	this.cardinal = 0;
+    }
+
+    public EE (int max, int[] tab) {
+	this(max);
+	this.caardinal = tab.length;
+
+	for (int i =0; i < this.cardinal; i++)
+	    this.ensTab[i] = tab[i];
+    }
+
+    public EE (EE e1) {
+	this.cardinal = e1.cardinal;
+	this.ensTab = new int[e1.ensTab.length];
+
+	for (int i =0; i < this.ensTab.length; i++)
+	    this.ensTab[i] = e1.ensTab[i];
+    }
+}
