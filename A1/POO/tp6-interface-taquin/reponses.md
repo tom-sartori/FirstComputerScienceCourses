@@ -1,0 +1,2 @@
+Part 1/E3/Q4 : Pour voir si le programme avance ou non, il suffirait d'afficher le taquin dans MettreAJour(). On pourrait également regarder si la taille de dejaVus augmente ou pas. 
+L'utilisation du debugger pourrait également s'avérer utile dans ce cas. 

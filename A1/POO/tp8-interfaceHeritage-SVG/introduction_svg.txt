@@ -1,0 +1,100 @@
+************************************
+Introduction svg.
+************************************
+
+Les images svg sont décrites via des balises (tags en anglais).
+
+Elles commencent toutes par l'en tête
+<?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+Puis, elles sont composées de descriptions de Tag.
+
+***************************
+Définition Tag
+***************************
+
+Un Tag peut être 
+- un Rectangle
+- un Cercle
+- un Groupe de Tag
+
+Un Tag peut posséder des paramètres (Rectangle : pour décrire largeur, longuer, Cercle : pour décrire centre, rayon, Groupe : pas de paramètres).
+Un Tag peut posséder un style (qui décrit taille trait, remplissage, transparence etc).
+
+Exemple.
+Soit g contenant r1 et r2, avec
+ - r1 ayant un style "trait bleu"
+ - r2 n'ayant pas de style défini
+ - g ayant un style "trait noir, remplissage rouge", 
+alors
+  - r1 aura un trait bleu, et remplissage rouge
+  - r2 aura un trait noir, et remplissage rouge
+Autrement dit, les éléments du groupes héritent du style du groupe, et peuvent redefinir certaines parties du style.
+
+
+
+***************************
+Format d'export d'un Tag
+***************************
+
+
+Un Tag s'exporte avec la syntaxe
+- "<nom paramètres et style/>"  pour les tag simples (Rectangle, Cercle etc)
+- "<nom paramètres et style>  contenu </nom>" pour un groupe
+
+Exemples :
+
+- un Rectangle sans style s'exporte <rect x="5.0" y="5.0" rx="10.0" ry="10.0" width="90.0" height="90.0" /> 
+- un Cercle de couleur de trait rouge s'exporte <circle cx="20.0" cy="10.0" r="5.0" stroke="red" />
+- un groupe (sans style) de 2 Rectangles (sans styles eux aussi) s'exporte 
+	<g>
+			<rect x="5.0" y="5.0" rx="10.0" ry="10.0" width="90.0" height="90.0" /> 
+			<rect x="20.0" y="20.0" rx="10.0" ry="10.0" width="90.0" height="90.0" />
+	</g>
+- un groupe (avec remplissage rouge) de 2 Rectangles (sans styles) s'exporte 
+	<g fill="red">
+			<rect x="5.0" y="5.0" rx="10.0" ry="10.0" width="90.0" height="90.0" /> 
+			<rect x="20.0" y="20.0" rx="10.0" ry="10.0" width="90.0" height="90.0" />
+	</g>
+
+
+Remarque : la présentation est arborescente ci-dessus est pour la lisibilité 
+mais le vrai fichier ne contient pas de \n (ni de commentaires bien sûr!)
+
+
+***************************
+Exemples complets
+***************************
+
+
+Enfin, une image svg est elle-même une balise, ayant des paramètres (largeur, hauteur ..), du contenu et n'ayant pas de style.
+
+Exemple : un fichier d'image svg avec 2 rectangles sans style
+
+<?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" width="1000.0" height="1000.0">
+	<rect x="5.0" y="5.0" rx="10.0" ry="10.0" width="90.0" height="90.0" /> 
+	<rect x="20.0" y="20.0" rx="10.0" ry="10.0" width="90.0" height="90.0" />	
+</svg>
+
+Exemple : un fichier d'image svg avec 
+- un groupe g1 contenant
+   - un groupe g2 contenant 2 rectangles
+   - un rectangle, 
+- un rectangle
+
+<?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" width="1000.0" height="1000.0">
+	<g fill="red" stroke="green">
+		<g stroke="black">
+			<rect x="5.0" y="5.0" rx="10.0" ry="10.0" width="90.0" height="90.0" />  %ici fill red (hérité), et stroke black (recouvert)
+			<rect x="20.0" y="20.0" rx="10.0" ry="10.0" width="90.0" height="90.0" />
+		</g>
+		<rect x="50.0" y="50.0" rx="10.0" ry="10.0" width="90.0" height="90.0" />
+	</g>
+	<rect x="50.0" y="50.0" rx="10.0" ry="10.0" width="90.0" height="90.0" />	
+</svg>
+
+
+Le format svg gère aussi les transformations, qui sont décrites dans le style, mais cela sort du cadre de l'introduction ! 
+
