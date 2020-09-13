@@ -1,0 +1,30 @@
+h1 {
+    text-align:center;
+}
+h2 {
+    text-align:center;
+}
+h3 {
+  font-style:italic;
+  color:blue;
+}
+body {
+    background-color:#838892;
+    width:600px;
+}
+p {
+    line-height:150%;
+    text-indent:5px;
+}
+.pair {
+    background-color:#5BBDBF;
+}
+.impair {
+    background-color:#FF5850;
+}
+#beware {
+    height:300px;
+}
+span {
+    color:red;
+}

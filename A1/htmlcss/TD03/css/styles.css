@@ -1,0 +1,110 @@
+h1 {
+    text-align:center;
+}
+h2 {
+    text-align:center;
+    padding:10px 0px;
+}
+h3 {
+    font-style:italic;
+    color:blue;
+    border:1px solid #CCC
+}
+body {
+    background-color:#838892;
+    width:600px;
+    margin:auto;
+}
+nav {
+    width:75%;
+    margin:0px auto;
+    height:20px;
+    display:flex;
+    flex-direction:raw;
+    align-items:stretch;
+}
+nav div {
+    background-color:#5BBDBF;
+    display:inline;
+    width:100px;
+
+}
+nav a {
+    background-color:#c0d5c2;
+    padding:0px 10px;
+    border:2px solid black;
+}
+nav>div:first-child>a {
+    border-left:none;
+}
+div.submenu {
+    top:50px;
+    left:0px;
+    height:20px;
+    position:relative;
+    display:none;
+    background-color:#aca;
+}
+nav>div:hover>.submenu {
+    display:block;
+}
+p {
+    line-height:150%;
+    text-indent:5px;
+    margin:30px 0px;
+}
+.pair {
+    background-color:#5BBDBF;
+}
+.impair {
+    background-color:#FF5850;
+}
+#beware {
+    height:300px;
+}
+span {
+    color:red;
+}
+a:visited {color:#0088FF;}
+a:hover {color:orange;}
+a {
+    text-decoration:none;
+    
+}
+thead {
+    color:#00AAFF;
+    background-color:#CCC;
+    text-align:center;
+}
+th span.skill {
+    color:#640051;
+    padding:0px 5px;
+}
+tbody>tr:nth-of-type(odd) {
+    background-color:#FFFFFF;
+}
+tbody>tr:nth-of-type(even) {
+    background-color:#CCC;
+}
+td {
+    margin:auto;
+}
+#ImageJeune {
+    float:left;
+}
+#beware {
+    float:right;
+}
+.sousImage {
+    clear:left;
+}
+#facebook {
+    position:relative;
+    float:right;
+    top:40px;
+}
+#twitter {
+    position:relative;
+    float:right;
+    left:32px;
+}

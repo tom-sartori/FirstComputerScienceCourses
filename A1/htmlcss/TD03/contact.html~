@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>...</head>
+  <body>
+    <header>
+      
+      <nav>
+	<ul>
+
+	  <li> <a href="index.html"> Acceuil </a> </li>
+	  <li> <a href="contact.html"> Contact </a> </li>
+	  
+	</ul>
+      </nav>
+
+
+      <blockquote>
+	<p>
+	  "Little John: Braddock ! Je vous préviens, attention où vous mettez les pieds !
+	  Braddock : Je mets les pieds où je veux, Little John… et c'est souvent dans la gueule."
+	  <br>
+	  <cite> Chuck Norris, Portés disparus 3 (1988), écrit par Arthur Silver, Larry Levinson, James Bruner, Chuck Norris, Steve Bing </cite>
+	</p>
+      </blockquote>
+    </header>
+    <main>
+      <article>...</article>
+      <article>...</article>
+      <aside>...</aside>
+    </main>
+    <footer>
+      <a href="#debut">Retour au début</a>
+    </footer>
+  </body>
+</html>
