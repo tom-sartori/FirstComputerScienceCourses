@@ -14,10 +14,12 @@ knight = plt.imread('/Users/Tom/dark-knight.png', 'PNG')
 
 # plt.imshow (knight)
 
-flipHorizontal = np.fliplr(knight)
+flipHorizontal = knight[::-1, :]
+# flipHorizontal = np.fliplr(knight) # Autre méthode avec fonction fliplr
 # plt.imshow (flipHorizontal)
 
-flipVertical = np.flipud(knight)
+flipVertical = knight[:, ::-1]
+# flipVertical = np.flipud(knight)
 # plt.imshow (flipVertical)
 
 double = np.concatenate((knight, knight), axis=1)

@@ -12,13 +12,11 @@ import matplotlib.pyplot as plt
 orange = [255, 127, 0]; 
 vert = [0, 255, 0]; 
 
-tab = np.zeros((1, 1, 3), dtype=np.uint8); 
-tab[0, 0] = orange; 
+hauteur = 100; 
 
 
-
-motif1 = orange * np.ones((3, 3, 3), dtype=np.uint8); # Image 3x3 tout orange
-motif1[2, 2] = vert; 
+motif1 = orange * np.ones((hauteur, hauteur, 3), dtype=np.uint8); # Image 3x3 tout orange
+motif1[(hauteur/3) *2:, (hauteur/3) *2:] = vert; 
 #plt.imshow(motif1); # Premier motif challenge
 
 motif1DoubleHaut = np.concatenate((motif1, np.fliplr(motif1)), axis =1); 
