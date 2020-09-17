@@ -42,6 +42,6 @@ def donut():
     
     plt.show(); 
     
-#quartDeCercle(); 
-#donut(); 
+quartDeCercle(); 
+donut(); 
     
