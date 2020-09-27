@@ -31,6 +31,7 @@ def etape1() :
     fond [1, 2] = orange; 
 
     plt.imshow(fond); # Etape 1
+    plt.show()
     
     
 def etape2(): 
@@ -41,6 +42,7 @@ def etape2():
     fond[2, 2] = orange; 
     
     plt.imshow(fond); 
+    plt.show()
     
     
 def etape3 ():
@@ -50,9 +52,10 @@ def etape3 ():
     fond[3, 2] = orange; 
     
     plt.imshow(fond);
+    plt.show()
     
 
 
-#etape1(); 
+etape1(); 
 etape2(); 
-#etape3(); 
+etape3(); 

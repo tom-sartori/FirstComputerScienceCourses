@@ -17,12 +17,15 @@ hauteur = 100;
 
 motif1 = orange * np.ones((hauteur, hauteur, 3), dtype=np.uint8); # Image 3x3 tout orange
 motif1[(hauteur/3) *2:, (hauteur/3) *2:] = vert; 
-#plt.imshow(motif1); # Premier motif challenge
+plt.imshow(motif1); # Premier motif challenge
+plt.show()
 
 motif1DoubleHaut = np.concatenate((motif1, np.fliplr(motif1)), axis =1); 
 motif2 = np.concatenate((motif1DoubleHaut, np.flipud(motif1DoubleHaut))); 
-#plt.imshow(motif2); # Deuxieme motif du challenge
+plt.imshow(motif2); # Deuxieme motif du challenge
+plt.show()
 
 motif3 = np.concatenate((motif2, motif2)); 
 motif3 = np.concatenate((motif3, motif3, motif3), axis = 1); 
 plt.imshow(motif3); # Troisieme motif du challenge
+plt.show()

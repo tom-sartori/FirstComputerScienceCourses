@@ -12,16 +12,20 @@ import matplotlib.pyplot as plt
 
 knight = plt.imread('/Users/Tom/dark-knight.png', 'PNG')
 
-# plt.imshow (knight)
+plt.imshow (knight)
+plt.show()
 
 flipHorizontal = knight[::-1, :]
 # flipHorizontal = np.fliplr(knight) # Autre méthode avec fonction fliplr
-# plt.imshow (flipHorizontal)
+plt.imshow (flipHorizontal)
+plt.show()
 
 flipVertical = knight[:, ::-1]
 # flipVertical = np.flipud(knight)
-# plt.imshow (flipVertical)
+plt.imshow (flipVertical)
+plt.show()
 
 double = np.concatenate((knight, knight), axis=1)
 quadruple = np.concatenate((double, np.flipud(double)))
 plt.imshow (quadruple)
+plt.show()

@@ -9,9 +9,41 @@ Created on Sat Sep 12 21:47:05 2020
 import numpy as np
 import matplotlib.pyplot as plt
 
+bleu = np.array([30, 120, 180], dtype = np.uint8)
+orange = np.array([255, 130, 15], dtype = np.uint8)
+vert = np.array([45, 160, 45], dtype = np.uint8)
 
 
 def quartDeCercle(): 
+    
+    hauteur = 500
+    largeur = 500
+    
+    # Initialisation avec fond bleu
+    quart = np.ones((hauteur, largeur, 3), dtype = np.uint8) * bleu 
+    
+    x, y = np.meshgrid(\
+                        np.arange(hauteur),\
+                        np.arange(largeur),\
+                        indexing = 'ij')
+
+    a = hauteur
+    b = 0
+    rayon = 500
+    
+    # Equation d'un cercle : (x-a)^2 + (y-b)^2 = r^2 
+    # donc ici : np.power(x-a, 2) + np.power(y-b, 2) = np.power(rayon, 2)
+    # Avec colorisation en orange de la zone souhaitée
+    quart[ (np.power(x-a, 2)) <= (np.power(rayon, 2) - np.power(y-b, 2)) ] = orange
+    
+
+    plt.imshow(quart)
+    plt.show() 
+    
+    
+    
+def quartDeCercle2(): # avec plot
+    
     quartCercle = plt.Circle((0, 0), 1, color='orange');
     
     fig, ax = plt.subplots();
@@ -24,11 +56,41 @@ def quartDeCercle():
     ax.add_artist(quartCercle);
         
     plt.show();
+
+
+
+def donut() :
+    
+    hauteur = 500
+    largeur = 500
+    
+    donut = np.ones((hauteur, largeur, 3), dtype = np.uint8) * bleu
+    
+    x, y = np.meshgrid(\
+                        np.arange(hauteur),\
+                        np.arange(largeur),\
+                        indexing = 'ij')
+    
+    a = hauteur/2
+    b = largeur/2
+    rayon = 200
+    
+    
+    # Equation d'un cercle : (x-a)^2 + (y-b)^2 = r^2 
+    # donc ici : np.power(x-a, 2) + np.power(y-b, 2) = np.power(rayon, 2)
+    
+    # Coloration en orange de la partie souhaitée 
+    # Le premier parametre correspond au contour du cercle exterrieur. On colorie donc ce qui est plus petit (à l'interrieur). 
+    # Le deuxieme paramètre correspond à la limite interrieure. Le rayon est la moitié du rayon du grand cercle. 
+    donut[ ( (np.power(x-a, 2)) <= (np.power(rayon, 2) - np.power(y-b, 2)) )  &  ( (np.power(x-a, 2)) >= (np.power(rayon/2, 2) - np.power(y-b, 2)) ) ] = orange
     
 
-
-
-def donut(): 
+    plt.imshow(donut)
+    plt.show() 
+    
+    
+    
+def donut2(): # avec plot
 
     theta = np.linspace(0, 2*np.pi);
     
@@ -42,6 +104,61 @@ def donut():
     
     plt.show(); 
     
+    
+    
+def anneaux() :
+    
+    hauteur = 500
+    largeur = 800
+    
+    anneaux = np.ones((hauteur, largeur, 3), dtype = np.uint8) * bleu
+    
+    x, y = np.meshgrid(\
+                        np.arange(hauteur),\
+                        np.arange(largeur),\
+                        indexing = 'ij')
+
+    
+    a = largeur/3
+    b = hauteur/2
+    c = (largeur/3) *2
+    
+    rayonExt = 200
+    rayonInt= 180
+    
+    
+    # Equation d'un cercle : (x-a)^2 + (y-b)^2 = r^2 
+    # donc ici : np.power(x-a, 2) + np.power(y-b, 2) = np.power(rayon, 2)
+    
+    # Coloration en orange de la partie souhaitée 
+    # Le premier parametre correspond au contour du cercle exterrieur. On colorie donc ce qui est plus petit (à l'interrieur). 
+    # Le deuxieme paramètre correspond à la limite interrieure. Le rayon est la moitié du rayon du grand cercle. 
+    anneaux[ ( (np.power(x-a, 2)) <= (np.power(rayonExt, 2) - np.power(y-b, 2)) )  &  ( (np.power(x-a, 2)) >= (np.power(rayonInt, 2) - np.power(y-b, 2)) ) ] = orange
+    anneaux[ ( (np.power(x-a, 2)) <= (np.power(rayonExt, 2) - np.power(y-c, 2)) )  &  ( (np.power(x-a, 2)) >= (np.power(rayonInt, 2) - np.power(y-c, 2)) ) ] = vert
+
+    
+    plt.imshow(anneaux)
+    plt.show() 
+    
+    
+    
 quartDeCercle(); 
 donut(); 
+anneaux(); 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
     
