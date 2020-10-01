@@ -103,7 +103,7 @@ def trinidad ():
 
 
 
-def aide() :
+def aideIJ() :
     bleu = np.array([0, 60, 135], dtype = np.uint8)
     rouge = np.array([215, 40, 40], dtype = np.uint8)
     blanc = np.array([255, 255, 255], dtype = np.uint8)
@@ -130,10 +130,40 @@ def aide() :
     
     plt.imshow(aide)
     plt.show() 
+    
+def aideXY() :
+    bleu = np.array([0, 60, 135], dtype = np.uint8)
+    rouge = np.array([215, 40, 40], dtype = np.uint8)
+    blanc = np.array([255, 255, 255], dtype = np.uint8)
+    vert = np.array([0, 120, 60], dtype = np.uint8)
+    
+    hauteur = 400
+    largeur = 800
+    
+    aide = np.zeros((hauteur, largeur, 3), dtype = np.uint8)
+    
+    x, y = np.meshgrid(\
+                        np.arange(largeur),\
+                        np.flip(np.arange(hauteur)),\
+                        indexing = 'xy')
 
 
-aide()
-enveloppe()
-seychelles()
-trinidad()
+    # Affichage de courbes suivant différents axes
+    # Par la suite, il suffit de modifier les coefficients
+    aide[ (hauteur-x) == (y) ] = rouge
+    #aide[ (x) == (y) ] = bleu
+    aide[ (x) == (largeur-y) ] = blanc
+    aide[ (hauteur-x) == (largeur-y) ] = vert
+    
+    aide[ (3*x)+1 == (y) ] = bleu
+    
+    
+    plt.imshow(aide)
+    plt.show() 
+
+
+aideXY()
+#enveloppe()
+#seychelles()
+#trinidad()
 
