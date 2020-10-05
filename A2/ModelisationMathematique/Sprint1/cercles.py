@@ -14,7 +14,7 @@ orange = np.array([255, 130, 15], dtype = np.uint8)
 vert = np.array([45, 160, 45], dtype = np.uint8)
 
 
-def quartDeCercle(): 
+def quartDeCercle(): # On se place dans un repère xy avec l'origine en haut à gauche et le pixel comme unité. 
     
     hauteur = 500
     largeur = 500
@@ -27,7 +27,7 @@ def quartDeCercle():
                         np.arange(largeur),\
                         indexing = 'ij')
 
-    a = hauteur
+    a = hauteur #Comme l'origine est en haut à gauche, on modifie le centre du cercle pour qu'il soit en bas à gauche. 
     b = 0
     rayon = 500
     
@@ -71,7 +71,7 @@ def donut() :
                         np.arange(largeur),\
                         indexing = 'ij')
     
-    a = hauteur/2
+    a = hauteur/2 #Comme l'origine est en haut à gauche, on modifie le centre du cercle pour qu'il soit au milieu. 
     b = largeur/2
     rayon = 200
     
@@ -119,7 +119,7 @@ def anneaux() :
                         indexing = 'ij')
 
     
-    a = largeur/3
+    a = largeur/3 #Comme l'origine est en haut à gauche, on modifie le centre de chaque cercle à notre convenance. 
     b = hauteur/2
     c = (largeur/3) *2
     
@@ -133,19 +133,28 @@ def anneaux() :
     # Coloration en orange de la partie souhaitée 
     # Le premier parametre correspond au contour du cercle exterrieur. On colorie donc ce qui est plus petit (à l'interrieur). 
     # Le deuxieme paramètre correspond à la limite interrieure. Le rayon est la moitié du rayon du grand cercle. 
-    anneaux[ ( (np.power(x-a, 2)) <= (np.power(rayonExt, 2) - np.power(y-b, 2)) )  &  ( (np.power(x-a, 2)) >= (np.power(rayonInt, 2) - np.power(y-b, 2)) ) ] = orange
+    #anneaux[ ( (np.power(x-a, 2)) <= (np.power(rayonExt, 2) - np.power(y-b, 2)) )  &  ( (np.power(x-a, 2)) >= (np.power(rayonInt, 2) - np.power(y-b, 2)) ) ] = orange
+    #anneaux[ ( (np.power(x-a, 2)) <= (np.power(rayonExt, 2) - np.power(y-c, 2)) )  &  ( (np.power(x-a, 2)) >= (np.power(rayonInt, 2) - np.power(y-c, 2)) ) ] = vert
+
+    # Coloration en orange du demi cercle du haut
+    anneaux[ ( (np.power(x-a, 2)) <= (np.power(rayonExt, 2) - np.power(y-b, 2)) )  &  ( (np.power(x-a, 2)) >= (np.power(rayonInt, 2) - np.power(y-b, 2)) ) & (x >= hauteur/2) ] = orange
+    
+    # Coloration du cercle vert
     anneaux[ ( (np.power(x-a, 2)) <= (np.power(rayonExt, 2) - np.power(y-c, 2)) )  &  ( (np.power(x-a, 2)) >= (np.power(rayonInt, 2) - np.power(y-c, 2)) ) ] = vert
+    
+    # Coloration en orange du demi cercle du bas
+    anneaux[ ( (np.power(x-a, 2)) <= (np.power(rayonExt, 2) - np.power(y-b, 2)) )  &  ( (np.power(x-a, 2)) >= (np.power(rayonInt, 2) - np.power(y-b, 2)) ) & (x <= hauteur/2)] = orange
 
     
     plt.imshow(anneaux)
     plt.show() 
     
-    
-    
-quartDeCercle(); 
-donut(); 
-anneaux(); 
 
+    
+    
+#quartDeCercle(); 
+#donut(); 
+anneaux(); 
 
 
 

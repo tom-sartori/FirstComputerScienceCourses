@@ -11,7 +11,7 @@ import numpy as np
 import matplotlib.pyplot as plt 
 
 
-def enveloppe() :
+def enveloppe() : # On se place dans un repère xy avec l'origine en haut à gauche et le pixel comme unité. 
     bleu = np.array([30, 120, 180], dtype = np.uint8)
     vert = np.array([45, 160, 45], dtype = np.uint8)
     orange = np.array([255, 130, 15], dtype = np.uint8)
@@ -40,7 +40,7 @@ def enveloppe() :
     
 
     
-def seychelles() :
+def seychelles() : # On se place dans un repère xy avec l'origine en haut à gauche et le pixel comme unité. 
     bleu = np.array([0, 60, 135], dtype = np.uint8)
     jaune = np.array([255, 215, 85], dtype = np.uint8)
     rouge = np.array([215, 40, 40], dtype = np.uint8)
@@ -72,7 +72,7 @@ def seychelles() :
 
 
 
-def trinidad (): 
+def trinidad (): # On se place dans un repère xy avec l'origine en haut à gauche et le pixel comme unité. 
     rouge = np.array([215, 40, 40], dtype = np.uint8)
     blanc = np.array([255, 255, 255], dtype = np.uint8)
     noir = np.array([0, 0, 0], dtype = np.uint8)
@@ -103,7 +103,7 @@ def trinidad ():
 
 
 
-def aideIJ() :
+def aideIJ() : # On se place dans un repère xy avec l'origine en haut à gauche et le pixel comme unité. 
     bleu = np.array([0, 60, 135], dtype = np.uint8)
     rouge = np.array([215, 40, 40], dtype = np.uint8)
     blanc = np.array([255, 255, 255], dtype = np.uint8)
@@ -131,7 +131,9 @@ def aideIJ() :
     plt.imshow(aide)
     plt.show() 
     
-def aideXY() :
+    
+    
+def aideXY() : # On se place dans un repère xy avec l'origine en bas à gauche et le pixel comme unité. 
     bleu = np.array([0, 60, 135], dtype = np.uint8)
     rouge = np.array([215, 40, 40], dtype = np.uint8)
     blanc = np.array([255, 255, 255], dtype = np.uint8)
@@ -144,26 +146,27 @@ def aideXY() :
     
     x, y = np.meshgrid(\
                         np.arange(largeur),\
-                        np.flip(np.arange(hauteur)),\
+                        np.flipud(np.arange(hauteur)),\
                         indexing = 'xy')
 
-
+    
     # Affichage de courbes suivant différents axes
     # Par la suite, il suffit de modifier les coefficients
     aide[ (hauteur-x) == (y) ] = rouge
-    #aide[ (x) == (y) ] = bleu
+    aide[ (x) == (y) ] = bleu
     aide[ (x) == (largeur-y) ] = blanc
     aide[ (hauteur-x) == (largeur-y) ] = vert
     
-    aide[ (3*x)+1 == (y) ] = bleu
+    # aide[ (3*x)+1 == (y) ] = bleu # Droite d'équation 3x+1 = y
     
     
     plt.imshow(aide)
     plt.show() 
 
 
+#aideIJ()
 aideXY()
-#enveloppe()
-#seychelles()
-#trinidad()
+enveloppe()
+seychelles()
+trinidad()
 
