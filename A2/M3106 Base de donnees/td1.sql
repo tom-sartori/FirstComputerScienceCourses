@@ -1,3 +1,11 @@
+
+Salaries(*codeSalarie*, nomSalarie, prenomSalarie, nbTotalJourneesTravail); 
+Equipes(*codeEquipe*, nomEquipe, codeSalarieChef+); 
+Projets(*codeProjet*, nomProjet, villeProjet, codeEquipe+); 
+EtreAffecte(*codeSalarie+ *, *codeEquipe+ *); 
+Travailler(*codeSalarie+ *, *dateTravail*, codeProjet+); 
+
+
 4. 
 
 CREATE OR REPLACE PROCEDURE AjouterJourneeTravail (
@@ -70,3 +78,43 @@ AND codeEquipe = 'E1';
 
 6. 
 // Contrainte clé etrangere
+
+ALTER TABLE Equipes 
+DROP CONSTRAINT fk_Equipes_codeSalarieChef
+
+ALTER TABLE Equipes 
+ADD CONSTRAINT fk_Equipes_codeSalarieChef 
+FOREIGN KEY (codeSalarieChef) REFERENCES EtreAffecte(codeSalarie); 
+
+
+
+ALTER TABLE Orders
+ADD CONSTRAINT FK_PersonOrder
+FOREIGN KEY (PersonID) REFERENCES Persons(PersonID);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
