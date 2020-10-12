@@ -1,3 +1,4 @@
+http://orainfo.iutmontp.univ-montp2.fr:5560/isqlplus/login.uix
 
 Salaries(*codeSalarie*, nomSalarie, prenomSalarie, nbTotalJourneesTravail); 
 Equipes(*codeEquipe*, nomEquipe, codeSalarieChef+); 
@@ -17,7 +18,7 @@ BEGIN
 
 INSERT INTO Travailler VALUES(p_codeSalarie, p_dateTravail, p_codeProjet); 
 
-UPDATE Salaries set nbTotalJourneesTravail = nbTotalJourneesTravail + 1
+UPDATE Salaries SET nbTotalJourneesTravail = nbTotalJourneesTravail + 1
 WHERE codeSalarie = p_codeSalarie; 
 
 END; 
@@ -42,7 +43,7 @@ CREATE OR REPLACE PROCEDURE AffecterSalarieEquipe (
 
 nbAffectation NUMBER;
 
-begin 
+BEGIN 
 
 SELECT COUNT(*) INTO nbAffectation 
 FROM EtreAffecte 
@@ -77,24 +78,186 @@ AND codeEquipe = 'E1';
 
 
 6. 
-// Contrainte clé etrangere
+// Clé d''inclusion entre deux associations
 
-ALTER TABLE Equipes 
-DROP CONSTRAINT fk_Equipes_codeSalarieChef
-
-ALTER TABLE Equipes 
-ADD CONSTRAINT fk_Equipes_codeSalarieChef 
-FOREIGN KEY (codeSalarieChef) REFERENCES EtreAffecte(codeSalarie); 
-
-
-
-ALTER TABLE Orders
-ADD CONSTRAINT FK_PersonOrder
-FOREIGN KEY (PersonID) REFERENCES Persons(PersonID);
+ALTER TABLE Equipes ADD CONSTRAINT 
+fk_Equipes_ChefAffecte FOREIGN KEY (codeEquipe, codeSalarieChef)
+REFERENCES EtreAffecte(codeEquipe, codeSalarie); 
 
 
 
 
+8. 
+
+CREATE OR REPLACE TRIGGER tr_nbTotalJourneesTravail 
+AFTER INSERT ON Travailler 
+FOR EACH ROW 
+
+BEGIN
+
+UPDATE Salaries 
+SET nbTotalJourneesTravail = nbTotalJourneesTravail +1
+WHERE codeSalarie = :NEW.codeSalarie; 
+
+END; 
+
+/
+Show Errors
+
+INSERT INTO Travailler VALUES ('S1', '10/01/2014', 'P1'); 
+
+SELECT nbTotalJourneesTravail
+FROM Salaries 
+WHERE codeSalarie = 'S1'; 
+
+
+9. 
+
+CREATE OR REPLACE TRIGGER tr_insertSalarie 
+BEFORE INSERT ON EtreAffecte 
+FOR EACH ROW 
+
+DECLARE 
+
+nb NUMBER; 
+
+BEGIN 
+
+SELECT COUNT(*) INTO nb 
+FROM EtreAffecte 
+WHERE codeSalarie = :NEW.codeSalarie; 
+
+IF (nb >= 3) THEN 
+	RAISE_APPLICATION_ERROR(-20001, 'Le salarié est déjà affecté à au moins trois équipes'); 
+END IF; 
+
+end; 
+
+/
+Show Errors
+
+INSERT INTO EtreAffecte VALUES ('S2', 'E4'); 
+
+SELECT * 
+FROM EtreAffecte 
+WHERE codeSalarie = 'S2' 
+AND codeEquipe = 'E4'; 
+
+
+INSERT INTO EtreAffecte VALUES ('S7', 'E4'); 
+
+SELECT * 
+FROM EtreAffecte 
+WHERE codeSalarie = 'S7' 
+AND codeEquipe = 'E4'; 
+
+
+10. 
+
+CREATE OR REPLACE TRIGGER tr_nbTotalJourneesTravail 
+AFTER INSERT OR UPDATE OF codeSalarie OR DELETE ON Travailler 
+FOR EACH ROW 
+
+BEGIN
+
+IF (INSERTING OR UPDATING) THEN
+	UPDATE Salaries 
+	SET nbTotalJourneesTravail = nbTotalJourneesTravail +1
+	WHERE codeSalarie = :NEW.codeSalarie; 
+END IF; 
+
+IF (DELETING OR UPDATING) THEN 
+	UPDATE Salaries
+	SET nbTotalJourneesTravail = nbTotalJourneesTravail -1
+	WHERE codeSalarie = :OLD.codeSalarie; 
+END IF; 
+
+	
+END; 
+
+/
+Show Errors
+
+
+UPDATE Travailler 
+SET codeSalarie = 'S5'
+WHERE codeSalarie = 'S1'
+AND dateTravail = '10/01/2014'; 
+
+SELECT nbTotalJourneesTravail 
+FROM Salaries 
+WHERE codeSalarie = 'S1'; 
+
+SELECT nbTotalJourneesTravail 
+FROM Salaries 
+WHERE codeSalarie = 'S5'; 
+
+
+DELETE Travailler 
+WHERE codeSalarie = 'S5' 
+AND dateTravail  ='10/01/2014'; 
+
+SELECT nbTotalJourneesTravail 
+FROM Salaries 
+WHERE codeSalarie = 'S5'; 
+
+
+
+12. 
+
+CREATE OR REPLACE VIEW Affectations AS 
+
+SELECT s.codeSalarie, nomSalarie, prenomSalarie, e.codeEquipe, nomEquipe
+FROM Salaries s
+JOIN EtreAffecte ef on s.codeSalarie = ef.codeSalarie
+JOIN Equipes e on ef.codeEquipe = e.codeEquipe; 
+
+INSERT INTO Affectations 
+VALUES ('S9', 'Zétofrais', 'Mélanie', 'E5', 'INDIGO'); 
+// ORA-01779: impossible de modifier une colonne correspondant à une table non protégée par Clé
+
+
+
+13. 
+
+CREATE OR REPLACE TRIGGER tr_Affectations 
+INSTEAD OF INSERT ON Affectations 
+FOR EACH ROW 
+
+BEGIN 
+
+INSERT INTO Salaries
+VALUES (:NEW.codeSalarie, :NEW.nomSalarie, :NEW.prenomSalarie, 0); 
+
+INSERT INTO Equipes 
+VALUES (:NEW.codeEquipe, :NEW.nomEquipe, NULL); 
+
+INSERT INTO EtreAffecte
+VALUES (:NEW.codeSalarie, :NEW.codeEquipe); 
+
+END; 
+
+
+INSERT INTO Affectations 
+VALUES ('S9', 'Zétofrais', 'Mélanie', 'E5', 'Indigo'); 
+
+INSERT INTO Affectations 
+VALUES ('S9', 'Zétofrais', 'Mélanie', 'E4', 'Mars'); 
+
+INSERT INTO Affectations 
+VALUES ('S5', 'Umule', 'Jacques', 'E6', 'Europa'); 
+
+INSERT INTO Affectations 
+VALUES ('S10', 'Zeblouse', 'Agathe', 'E7', 'Galileo'); 
+
+SELECT * 
+FROM EtreAffecte
+
+
+
+Salaries(*codeSalarie*, nomSalarie, prenomSalarie, nbTotalJourneesTravail); 
+Equipes(*codeEquipe*, nomEquipe, codeSalarieChef+); 
+EtreAffecte(*codeSalarie+ *, *codeEquipe+ *); 
 
 
 
@@ -111,10 +274,8 @@ FOREIGN KEY (PersonID) REFERENCES Persons(PersonID);
 
 
 
-
-
-
-
-
-
-
+	v_codeSalarie Salaries.codeSalarie%TYPE, 
+	v_nomSalarie Salaries.nomSalarie%TYPE, 
+	v_prenomSalarie Salaries.prenomSalarie%TYPE, 
+	v_codeEquipe Equipes.codeEquipe%TYPE, 
+	v_nomEquipe Equipes.nomEquipe%TYPE
