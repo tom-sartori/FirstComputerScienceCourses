@@ -50,9 +50,9 @@ FROM EtreAffecte
 WHERE codesalarie = p_codeSalarie;  
 
 IF (nbAffectation >= 3) THEN 
-	RAISE_APPLICATION_ERROR(-20001, 'Le salarié est déjà affecté à au moins trois équipes'); 
+RAISE_APPLICATION_ERROR(-20001, 'Le salarié est déjà affecté à au moins trois équipes'); 
 ELSE 
-	INSERT INTO EtreAffecte VALUES (p_codeSalarie, p_codeEquipe); 
+INSERT INTO EtreAffecte VALUES (p_codeSalarie, p_codeEquipe); 
 
 END IF; 
 
@@ -128,7 +128,7 @@ FROM EtreAffecte
 WHERE codeSalarie = :NEW.codeSalarie; 
 
 IF (nb >= 3) THEN 
-	RAISE_APPLICATION_ERROR(-20001, 'Le salarié est déjà affecté à au moins trois équipes'); 
+RAISE_APPLICATION_ERROR(-20001, 'Le salarié est déjà affecté à au moins trois équipes'); 
 END IF; 
 
 end; 
@@ -161,18 +161,18 @@ FOR EACH ROW
 BEGIN
 
 IF (INSERTING OR UPDATING) THEN
-	UPDATE Salaries 
-	SET nbTotalJourneesTravail = nbTotalJourneesTravail +1
-	WHERE codeSalarie = :NEW.codeSalarie; 
+UPDATE Salaries 
+SET nbTotalJourneesTravail = nbTotalJourneesTravail +1
+WHERE codeSalarie = :NEW.codeSalarie; 
 END IF; 
 
 IF (DELETING OR UPDATING) THEN 
-	UPDATE Salaries
-	SET nbTotalJourneesTravail = nbTotalJourneesTravail -1
-	WHERE codeSalarie = :OLD.codeSalarie; 
+UPDATE Salaries
+SET nbTotalJourneesTravail = nbTotalJourneesTravail -1
+WHERE codeSalarie = :OLD.codeSalarie; 
 END IF; 
 
-	
+
 END; 
 
 /
@@ -255,6 +255,118 @@ FROM EtreAffecte
 
 
 
+
+
+13 bis. 
+
+SET SERVEROUTPUT ON; 
+
+CREATE OR REPLACE TRIGGER tr_Affectations 
+INSTEAD OF INSERT ON Affectations 
+FOR EACH ROW 
+
+
+BEGIN 
+
+
+IF ( (verifSalarie(:NEW.codeSalarie, :NEW.nomSalarie, :NEW.prenomSalarie) = 1) AND (verifEquipe(:NEW.codeEquipe, :NEW.nomEquipe) = 1)) THEN
+
+	INSERT INTO Salaries
+	VALUES (:NEW.codeSalarie, :NEW.nomSalarie, :NEW.prenomSalarie, 0); 
+
+	INSERT INTO Equipes 
+	VALUES (:NEW.codeEquipe, :NEW.nomEquipe, NULL); 
+
+	INSERT INTO EtreAffecte
+	VALUES (:NEW.codeSalarie, :NEW.codeEquipe); 
+
+ELSE
+	DBMS_output.put_line('Données fausses'); 
+END IF; 
+
+END; 
+
+/
+Show Errors
+
+INSERT INTO Affectations 
+VALUES ('S9', 'Ouzy', 'Jacques', 'E6', 'Europa'); 
+
+INSERT INTO Affectations 
+VALUES ('S9', 'Zétofrais', 'Mélanie', 'E6', 'Galileo'); 
+
+
+
+
+CREATE OR REPLACE FUNCTION verifSalarie (
+	v_codeSalarie Salaries.codeSalarie%TYPE, 
+	v_nomSalarie Salaries.nomSalarie%TYPE, 
+	v_prenomSalarie Salaries.prenomSalarie%TYPE) 
+RETURN NUMBER IS
+
+nb NUMBER; 
+r_salarie Salaries%ROWTYPE; 
+
+BEGIN
+
+SELECT COUNT(*) INTO nb 
+FROM Salaries 
+where codeSalarie = v_codeSalarie;
+
+IF (nb = 0) THEN 
+	return 1; 
+END IF; 
+
+SELECT * INTO r_salarie 
+FROM Salaries 
+where codeSalarie = v_codeSalarie;
+
+IF ((r_salarie.nomSalarie = v_nomSalarie) AND (r_salarie.prenomSalarie = v_prenomSalarie) ) THEN 
+	return 1; 
+END IF; 
+
+return 0; 
+
+end; 
+
+/
+Show Errors 
+
+
+CREATE OR REPLACE FUNCTION verifEquipe (
+	v_codeEquipe Equipes.codeEquipe%TYPE, 
+	v_nomEquipe Equipes.nomEquipe%TYPE) 
+RETURN NUMBER IS
+
+nb NUMBER; 
+r_equipe Equipes%ROWTYPE; 
+
+BEGIN
+
+SELECT COUNT(*) INTO nb 
+FROM Equipes 
+where codeEquipe = v_codeEquipe;
+
+IF (nb = 0) THEN 
+	return 1; 
+END IF; 
+
+SELECT * INTO r_equipe 
+FROM Equipes
+where codeEquipe = v_codeEquipe;
+
+IF (r_equipe.nomEquipe = v_nomEquipe) THEN 
+	return 1; 
+END IF; 
+
+return 0; 
+
+end; 
+
+/
+Show Errors 
+
+
 Salaries(*codeSalarie*, nomSalarie, prenomSalarie, nbTotalJourneesTravail); 
 Equipes(*codeEquipe*, nomEquipe, codeSalarieChef+); 
 EtreAffecte(*codeSalarie+ *, *codeEquipe+ *); 
@@ -274,8 +386,8 @@ EtreAffecte(*codeSalarie+ *, *codeEquipe+ *);
 
 
 
-	v_codeSalarie Salaries.codeSalarie%TYPE, 
-	v_nomSalarie Salaries.nomSalarie%TYPE, 
-	v_prenomSalarie Salaries.prenomSalarie%TYPE, 
-	v_codeEquipe Equipes.codeEquipe%TYPE, 
-	v_nomEquipe Equipes.nomEquipe%TYPE
+v_codeSalarie Salaries.codeSalarie%TYPE, 
+v_nomSalarie Salaries.nomSalarie%TYPE, 
+v_prenomSalarie Salaries.prenomSalarie%TYPE, 
+v_codeEquipe Equipes.codeEquipe%TYPE, 
+v_nomEquipe Equipes.nomEquipe%TYPE
