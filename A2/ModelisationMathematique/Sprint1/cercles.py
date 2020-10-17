@@ -90,6 +90,40 @@ def donut() :
     
     
     
+def donutXY() :
+    
+    hauteur = 500
+    largeur = 500
+    
+    donut = np.ones((hauteur, largeur, 3), dtype = np.uint8) * bleu
+    
+    X = np.arange(largeur)
+    Y = np.arange(hauteur)
+    Y = Y[::-1]
+    
+    x, y = np.meshgrid(\
+                        X,\
+                        Y,\
+                        indexing = 'ij')
+    
+    a = hauteur/2 #Comme l'origine est en haut à gauche, on modifie le centre du cercle pour qu'il soit au milieu. 
+    b = largeur/2
+    rayon = 200
+    
+    
+    # Equation d'un cercle : (x-a)^2 + (y-b)^2 = r^2 
+    # donc ici : np.power(x-a, 2) + np.power(y-b, 2) = np.power(rayon, 2)
+    
+    # Coloration en orange de la partie souhaitée 
+    # Le premier parametre correspond au contour du cercle exterrieur. On colorie donc ce qui est plus petit (à l'interrieur). 
+    # Le deuxieme paramètre correspond à la limite interrieure. Le rayon est la moitié du rayon du grand cercle. 
+    donut[ ( (np.power(x-a, 2)) <= (np.power(rayon, 2) - np.power(y-b, 2)) )  &  ( (np.power(x-a, 2)) >= (np.power(rayon/2, 2) - np.power(y-b, 2)) ) ] = orange
+    
+
+    plt.imshow(donut)
+    plt.show() 
+    
+    
 def donut2(): # avec plot
 
     theta = np.linspace(0, 2*np.pi);
@@ -152,8 +186,9 @@ def anneaux() :
 
     
     
-#quartDeCercle(); 
-#donut(); 
+quartDeCercle(); 
+donut(); 
+donutXY();
 anneaux(); 
 
 

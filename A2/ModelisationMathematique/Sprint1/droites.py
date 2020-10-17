@@ -144,9 +144,13 @@ def aideXY() : # On se place dans un repère xy avec l'origine en bas à gauche 
     
     aide = np.zeros((hauteur, largeur, 3), dtype = np.uint8)
     
+    X = np.arange(largeur)
+    Y = np.arange(hauteur) 
+    Y = Y[::-1]
+    
     x, y = np.meshgrid(\
-                        np.arange(largeur),\
-                        np.flipud(np.arange(hauteur)),\
+                        X,\
+                        Y,\
                         indexing = 'xy')
 
     
