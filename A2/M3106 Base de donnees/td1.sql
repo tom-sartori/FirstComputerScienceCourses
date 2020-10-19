@@ -367,9 +367,131 @@ end;
 Show Errors 
 
 
-Salaries(*codeSalarie*, nomSalarie, prenomSalarie, nbTotalJourneesTravail); 
-Equipes(*codeEquipe*, nomEquipe, codeSalarieChef+); 
-EtreAffecte(*codeSalarie+ *, *codeEquipe+ *); 
+
+
+TP 10. 
+
+SET TIMING ON 
+SET AUTOTRACE ON 
+SET AUTOTRACE TRACEONLY; 
+
+2. 
+
+SELECT sexeClient, villeClient
+FROM Clients 
+WHERE nomClient = 'Palleja'; 
+
+
+3.a 
+
+SELECT * 
+FROM Clients 
+WHERE idClient = 1000; 
+
+3.b 
+
+SELECT /*+ no_index(Clients pk_Clients) */ *
+FROM Clients 
+WHERE idClient = 1000; 
+
+3.c 
+
+SELECT * 
+FROM Clients 
+WHERE idClient != 1000; 
+
+
+3.c bis 
+
+SELECT /*+ index(Clients pk_Clients) */ *
+FROM Clients 
+WHERE idClient != 1000; 
+
+
+3.d
+
+SELECT * 
+FROM Commandes 
+WHERE idCommande > 60000; 
+
+
+
+4.b 
+
+SELECT * 
+FROM Clients 
+WHERE nomClient = 'Claude'; 
+
+
+4.c 
+
+CREATE INDEX idx_nomClient ON Clients(nomClient); 
+
+
+
+5.a
+
+UPDATE Commandes 
+SET montantCommande = montantCommande + 10;
+
+
+5.b 
+
+CREATE INDEX idx_Commandes_MontantCommandes ON Commandes (montantCommande); 
+
+
+5.c
+
+UPDATE Commandes 
+SET montantCommande = montantCommande - 10;
+
+
+
+6.a 
+
+SELECT * 
+FROM Commandes 
+WHERE montantCommande/3 > 3500; 
+
+
+6.b 
+
+SELECT * 
+FROM Commandes 
+WHERE montantCommande > 3500*3; 
+
+
+7.a 
+
+SELECT * 
+FROM Clients 
+WHERE villeClient = 'Marseille' AND prenomClient = 'Pierre'; 
+
+
+7.b 
+
+CREATE INDEX idx_Clients_prenomClient ON Clients(prenomClient); 
+CREATE INDEX idx_Clients_villeClient ON Clients(villeClient); 
+
+
+7.c 
+
+DROP INDEX idx_Clients_prenomClient ; 
+DROP INDEX idx_Clients_villeClient ; 
+
+
+7.d 
+
+SELECT * 
+FROM Clients 
+WHERE prenomClient = 'Xavier'; 
+
+
+7.e 
+
+SELECT * 
+FROM Clients 
+WHERE villeClient = 'Montpellier'; 
 
 
 
@@ -377,17 +499,3 @@ EtreAffecte(*codeSalarie+ *, *codeEquipe+ *);
 
 
 
-
-
-
-
-
-
-
-
-
-v_codeSalarie Salaries.codeSalarie%TYPE, 
-v_nomSalarie Salaries.nomSalarie%TYPE, 
-v_prenomSalarie Salaries.prenomSalarie%TYPE, 
-v_codeEquipe Equipes.codeEquipe%TYPE, 
-v_nomEquipe Equipes.nomEquipe%TYPE
