@@ -104,7 +104,7 @@ def donutXY() :
     x, y = np.meshgrid(\
                         X,\
                         Y,\
-                        indexing = 'ij')
+                        indexing = 'xy')
     
     a = hauteur/2 #Comme l'origine est en haut à gauche, on modifie le centre du cercle pour qu'il soit au milieu. 
     b = largeur/2

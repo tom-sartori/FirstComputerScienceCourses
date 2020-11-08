@@ -1,0 +1,40 @@
+ Algorithme génétique
+
+
+population calculerNext(pop)
+initialiser nouvellePop population avec un individu de pop de fitness max
+répéter (|pop|-1 fois)
+        i1 = selectionRoulette(pop)
+        t2 =  selectionRoulette(pop)
+        i3 =   croisement(i1,i2)
+si random  < 0,1 alors
+      i3 = mutation(i3)
+finsi
+ajouter i3 à nouvellePop
+fin répéter
+retourner nouvellePop
+
+algoGen(I, nbGen)
+pop = creerPopInitiale(I,nbIndividus)
+répéter (nbGen fois)
+   pop ) = calculerNext(pop)
+   fin répéter
+best = selctionIndividuMeilleureFitness(pop)
+sol = solutioAssociée(best)
+
+................................
+population  creerPopInitiale(I,nbIndividus)(I,nbIndividus)
+
+?
+...............................
+entier fitness(individu i)
+// résultat : retourne le nombre de pièces ramassées pour la solution associée à i
+
+
+
+
+
+
+
+
+
