@@ -11,17 +11,24 @@ import matplotlib.pyplot as plt
 
 knight = plt.imread('/Users/Tom/dark-knight.png', 'PNG')
 
-#plt.imshow (knight)
+plt.imshow (knight)
+plt.show()
+
 
 doubleHorizontal = np.block([[knight], [knight]]) 
 # doubleHorizontal = np.concatenate((knight, knight), axis=1)
-plt.imshow (doubleHorizontal)
+
+plt.imshow(doubleHorizontal)
 plt.show()
 
+
 doubleVertical = np.concatenate((knight, knight)) # axis = 0
+
 plt.imshow (doubleVertical)
 plt.show()
 
+
 quadruple = np.block([[doubleVertical], [doubleVertical]])
+
 plt.imshow (quadruple)
 plt.show()

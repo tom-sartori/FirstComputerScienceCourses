@@ -14,7 +14,8 @@ orange = np.array([255, 130, 15], dtype = np.uint8)
 vert = np.array([45, 160, 45], dtype = np.uint8)
 
 
-def quartDeCercle(): # On se place dans un repère xy avec l'origine en haut à gauche et le pixel comme unité. 
+# On se place dans un repère xy avec l'origine en haut à gauche et le pixel comme unité. 
+def quartDeCercle(): 
     
     hauteur = 500
     largeur = 500
@@ -59,7 +60,7 @@ def quartDeCercle2(): # avec plot
 
 
 
-def donut() :
+def donut() : # On se place dans un repère xy avec l'origine en haut à gauche et le pixel comme unité. 
     
     hauteur = 500
     largeur = 500
@@ -89,8 +90,8 @@ def donut() :
     plt.show() 
     
     
-    
-def donutXY() :
+# On se place dans un repère xy avec l'origine en bas à gauche et le pixel comme unité. 
+def donutXY() : 
     
     hauteur = 500
     largeur = 500
@@ -140,7 +141,7 @@ def donut2(): # avec plot
     
     
     
-def anneaux() :
+def anneaux() : # On se place dans un repère xy avec l'origine en haut à gauche et le pixel comme unité. 
     
     hauteur = 500
     largeur = 800
@@ -167,8 +168,6 @@ def anneaux() :
     # Coloration en orange de la partie souhaitée 
     # Le premier parametre correspond au contour du cercle exterrieur. On colorie donc ce qui est plus petit (à l'interrieur). 
     # Le deuxieme paramètre correspond à la limite interrieure. Le rayon est la moitié du rayon du grand cercle. 
-    #anneaux[ ( (np.power(x-a, 2)) <= (np.power(rayonExt, 2) - np.power(y-b, 2)) )  &  ( (np.power(x-a, 2)) >= (np.power(rayonInt, 2) - np.power(y-b, 2)) ) ] = orange
-    #anneaux[ ( (np.power(x-a, 2)) <= (np.power(rayonExt, 2) - np.power(y-c, 2)) )  &  ( (np.power(x-a, 2)) >= (np.power(rayonInt, 2) - np.power(y-c, 2)) ) ] = vert
 
     # Coloration en orange du demi cercle du haut
     anneaux[ ( (np.power(x-a, 2)) <= (np.power(rayonExt, 2) - np.power(y-b, 2)) )  &  ( (np.power(x-a, 2)) >= (np.power(rayonInt, 2) - np.power(y-b, 2)) ) & (x >= hauteur/2) ] = orange
@@ -187,8 +186,8 @@ def anneaux() :
     
     
 quartDeCercle(); 
-donut(); 
-donutXY();
+quartDeCercle2(); 
+donut2(); 
 anneaux(); 
 
 

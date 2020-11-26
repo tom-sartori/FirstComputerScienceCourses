@@ -9,30 +9,9 @@ Created on Wed Nov  4 09:48:03 2020
 import numpy as np
 import matplotlib.pyplot as plt
 
-bleu = np.array([30, 120, 180], dtype = np.uint8)
-orange = np.array([255, 130, 15], dtype = np.uint8)
-vert = np.array([45, 160, 45], dtype = np.uint8)
 
-
-
-
-def cercle(): # avec plot
-
-    theta = np.linspace(0, 2*np.pi);
-    
-    x = np.cos(theta);
-    y = np.sin(theta);
-    plt.plot(x, y, linewidth=1, color='orange');
-    
-    plt.axis("equal");
-    plt.xlim(-1.25, 1.25); 
-    plt.ylim(-1.5, 1.5);
-    
-    plt.show();
-
-
-
-def test(): 
+# On se place dans un repère orthonormé avec comme unité le pixel. 
+def formes(): 
     # Enveloppe, on démare au point en haut à gauche (-1 ; 0)
     plt.plot([-3, -1, -1, -3, -3, -2, -1], [0, 0, -2, -2, 0, -1, 0])
     
@@ -43,7 +22,7 @@ def test():
     plt.plot([0, 2, 4, 0, 0, 3, 3, 2, 2, 4, 4], [4, 6, 4, 4, 0, 0, 2, 2, 0, 0, 4])
     
     # Cercle en (7 ; 2)
-    theta = np.linspace(0, 2*np.pi);
+    theta = np.linspace(0, 2*np.pi, 101)
     x = np.cos(theta) + 7;
     y = np.sin(theta) + 2;
     plt.plot(x, y, linewidth=1);
@@ -60,16 +39,12 @@ def test():
     plt.plot(x, y, linewidth=1);
     
     
-    # Motif en rouge, on commence en (7 ; -2)
-    plt.plot([7, 7, 8, 8, 7], [-2, -1, -1, -2, -2])
+    # Motif en rouge, on commence en (7 ; -1)
+    plt.plot([7, 10, 10, 7, 7, 7, 10, 10, 9, 9, 8, 8], [-1, -1, -3, -3, -1, -2, -2, -1, -1, -3, -3, -1])
 
     
     plt.axis("equal")
     plt.show
 
 
-
-    
-
-cercle()
-test()
+formes()

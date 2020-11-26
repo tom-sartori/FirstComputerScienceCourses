@@ -11,7 +11,8 @@ import numpy as np
 import matplotlib.pyplot as plt 
 
 
-def enveloppe() : # On se place dans un repère xy avec l'origine en haut à gauche et le pixel comme unité. 
+# On se place dans un repère xy avec l'origine en haut à gauche et le pixel comme unité. 
+def enveloppe() : 
     bleu = np.array([30, 120, 180], dtype = np.uint8)
     vert = np.array([45, 160, 45], dtype = np.uint8)
     orange = np.array([255, 130, 15], dtype = np.uint8)
@@ -20,7 +21,7 @@ def enveloppe() : # On se place dans un repère xy avec l'origine en haut à gau
     hauteur = 400
     largeur = 800
     
-    # Initialisation de l'enveloppe 
+    # Initialisation de l'enveloppe avec fond noir. 
     enveloppe = np.zeros((hauteur, largeur, 3), dtype = np.uint8)
     
     # Création des matrices d'indices (lignes et colonnes)
@@ -30,6 +31,7 @@ def enveloppe() : # On se place dans un repère xy avec l'origine en haut à gau
                         indexing = 'ij')
     
     # Affectation des couleurs suivant les conditions
+    # Les conditions étants les équitations des droites correspondantes. 
     enveloppe[ ( (2 * x) <= y )  &  ( (2 * x) <= (largeur - y) ) ] = bleu
     enveloppe[ ( (2 * x) < y )  &  ( (2 * x) > (largeur - y) ) ] = orange
     enveloppe[ ( (2 * x) >= y )  &  ( (2 * x) >= (largeur - y) ) ] = vert
@@ -39,8 +41,9 @@ def enveloppe() : # On se place dans un repère xy avec l'origine en haut à gau
     plt.show() 
     
 
-    
-def seychelles() : # On se place dans un repère xy avec l'origine en haut à gauche et le pixel comme unité. 
+
+# On se place dans un repère xy avec l'origine en haut à gauche et le pixel comme unité. 
+def seychelles() : 
     bleu = np.array([0, 60, 135], dtype = np.uint8)
     jaune = np.array([255, 215, 85], dtype = np.uint8)
     rouge = np.array([215, 40, 40], dtype = np.uint8)
@@ -59,7 +62,9 @@ def seychelles() : # On se place dans un repère xy avec l'origine en haut à ga
                         np.arange(largeur),\
                         indexing = 'ij')
 
-    
+
+    # Affectation des couleurs suivant les conditions
+    # Les conditions étants les équitations des droites correspondantes. 
     seychelles[ (hauteur-x) * 0.8 >= y ] = bleu
     seychelles[ ( (hauteur-x) * 0.8 < y )  &  ( (hauteur-x) * 1.75 >= y ) ] = jaune
     seychelles[ ( (hauteur-x) * 1.75 < y )  &  ( (hauteur-x) * 3.25 >= y ) ] = rouge
@@ -71,8 +76,8 @@ def seychelles() : # On se place dans un repère xy avec l'origine en haut à ga
     plt.show() 
 
 
-
-def trinidad (): # On se place dans un repère xy avec l'origine en haut à gauche et le pixel comme unité. 
+# On se place dans un repère xy avec l'origine en haut à gauche et le pixel comme unité. 
+def trinidad (): 
     rouge = np.array([215, 40, 40], dtype = np.uint8)
     blanc = np.array([255, 255, 255], dtype = np.uint8)
     noir = np.array([0, 0, 0], dtype = np.uint8)
@@ -102,8 +107,8 @@ def trinidad (): # On se place dans un repère xy avec l'origine en haut à gauc
     plt.show()
 
 
-
-def aideIJ() : # On se place dans un repère xy avec l'origine en haut à gauche et le pixel comme unité. 
+# On se place dans un repère xy avec l'origine en haut à gauche et le pixel comme unité. 
+def aideIJ() : 
     bleu = np.array([0, 60, 135], dtype = np.uint8)
     rouge = np.array([215, 40, 40], dtype = np.uint8)
     blanc = np.array([255, 255, 255], dtype = np.uint8)
@@ -132,8 +137,8 @@ def aideIJ() : # On se place dans un repère xy avec l'origine en haut à gauche
     plt.show() 
     
     
-    
-def aideXY() : # On se place dans un repère xy avec l'origine en bas à gauche et le pixel comme unité. 
+# On se place dans un repère xy avec l'origine en bas à gauche et le pixel comme unité. 
+def aideXY() : 
     bleu = np.array([0, 60, 135], dtype = np.uint8)
     rouge = np.array([215, 40, 40], dtype = np.uint8)
     blanc = np.array([255, 255, 255], dtype = np.uint8)
@@ -168,7 +173,7 @@ def aideXY() : # On se place dans un repère xy avec l'origine en bas à gauche 
     plt.show() 
 
 
-#aideIJ()
+aideIJ()
 aideXY()
 enveloppe()
 seychelles()

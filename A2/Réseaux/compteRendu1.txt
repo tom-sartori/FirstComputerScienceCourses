@@ -1,0 +1,71 @@
+
+
+1. 
+LAN : Local Area Network. C'est un réseau local, au contraire du WAN. 
+
+Routeur permet de connecter les réseaux ensemble. Niveau 3. 
+Il fait le routage grâce aux adresses ip. 
+
+Le switch connecte les machine à l'intérieur d'une LAN grâce aux adresses MAC. Niveau 2. 
+
+Box ADSL est un routeur et un switch. Le modem permet de moduler des fréquences afin d'utiliser le réseau téléphonique. L'ADSL permet une connexion asymétrique. 
+
+Lignes fibres plus rapides mais il est nécessaire d'être équipé. 
+
+Couche 1 : représentation physique des données. 
+Couche 2 : regroupement et liaison entre les données dans un réseau local. 
+Couche 3 : ip, routeur, et connexion avec le reste du monde. 
+Protocole http et tcp pour accéder aux données disponibles dans le monde. 
+Permet de se focaliser sur certains points très précis. 
+
+
+2. 
+192 sont les adresses privées et donc locales. Elles sont réutilisables dans différents réseaux locaux. 
+161 sont les adresses publiques. 
+ipv6 permet de ne pas avoir de pénurie d'adresses. 
+
+Les masques sont utilisés pour les adresses privées. 
+Table de routage : destination, masque, passerelle. 
+Adresse 0.0.0.0 est l'adresse par défaut. 
+
+Il existe différentes classes d'adresses ; A, B, C et D. 
+
+
+3. 
+Table de routage : 
+Machine possède adresse MAC et ip. 
+La machine se connecte au réseau local avec sa carte réseau. 
+
+Lignes basiques nécessaires à la table de rout : 
+
+- adresse fictive locale pour rester sur le réseau : 127...
+- Préfixe significatif unique pour ce réseau. Passerelle est l'adressi ip de la machine.
+- Ligne pour les adresses locales.  
+- Si ne trouve pas l'adresse ip de la machine dans le réseau, alors lance le protocope ARP. 
+- Ligne pour aller vers les adresses du monde. 
+
+Table minimale : 
+- Adresse locale. 
+- Vers le routeur.
+- Autres adresses.  
+
+
+4. 
+Serveur PGI pas accessible en l'état. 
+Routeur fait du NAT (network address translation), lorsqu'il fait correspondre des adresses IP à d'autres adresses IP. Transforme adresse privée en publique. 
+DMZ est un sous réseau démilitarisé protégé par un par-feu. Il contient des machines qui n'ont pas besoin d'accéder au réseau local. 
+
+
+5. 
+DHCP (Dynamic Host Configuration Protocol) permet l'automatisation des attributions  d'adresses ip. 
+Nécessaire de connaître aussi l'adresse du routeur et du serveur DNS au minimum. 
+
+
+6.
+HTTP permet de faire la demande pour se connecter au serveur mai sans avoir encore le nom de domaine (juste ip). 
+DNS (Domain Name System), c'est le système des noms de domaine. Il permet de traduire les adresses ip en nom de domaine. 
+Consulte sa table de routage. Se rend compte que c'est dans le réseau publique et il faut donc envoyer le paquet ip au routeur. 
+Récupérer adresse MAC. 
+Utiliser TCP pour envoyer le paquet au routeur. 
+Envoi vers la destination à partir du routeur. 
+

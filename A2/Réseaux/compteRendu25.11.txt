@@ -1,0 +1,12 @@
+Paquet ip est encapsulé par trame ethernet pour aller au routeur. 
+Boucle locale, adresse 127. 
+
+NAT convertie l'adresse ip privée en publique. 
+DMZ, zone démilitarisée pour accéder au réseau local. 
+
+DHCP, pour automatiser la configuration ip. Dès qu'une machine se connecte au réseau, il donne une adresse ip. Statique ou dynamique. 
+
+DNS permet de connaitre l'adresse ip à partir d'un domaine. 
+Si on ne connait pas l'adresse MAC du routeur, on utilise le protocole ARP. 
+Pour sécuriser cette requête, on utilise le protocole TCP, pour se connecter au serveur HTTP. Il fiabilise le transport grâce a une connexion virtuelle et une multitude d'accusés de reception. 
+On utilise un socket TCP pour toute une session. 
