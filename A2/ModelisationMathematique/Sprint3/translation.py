@@ -41,29 +41,14 @@ def translate():
     
     u = 150
     
-    rouge = np.array([215, 40, 40], dtype = np.uint8)
-    image = np.ones((n, m, 3), dtype = np.uint8) #* rouge
-    
-    X = np.arange(m)
-    Y = np.arange(n) 
-    #Y = Y[::-1]
-    
-    X = np.linspace(n - 1, 0, n)
-    Y = np.linspace(0, m - 1, m)
-    
-    x, y = np.meshgrid(\
-                        X ,\
-                        Y ,\
-                        indexing = 'xy')
-    
-    
-    #for i in range(n):
-     #   for j in range(m): 
-      #      if (i + u < n & j + u < m): 
-       #         image[i, j] = face[i + 150, j + 150]
-    
-    image[:50, :50] = rouge
-    #image[ (x) == (y) ] = rouge
+    image = np.ones((n, m, 3), dtype = np.uint8) 
+    bleu = np.array([30, 120, 180], dtype = np.uint8)
+
+
+    for i in range(n):
+        for j in range(m): 
+            if (i + u < n & j + u < m): 
+                image[i, j] = face[i + 150, j - 150]
     
     
     plt.imshow(image)
@@ -105,9 +90,9 @@ def translate3():
     plt.imshow(grand)
     plt.show()
 
-    
-translate()
+  
 #translate1()
+translate()
 #translate2()
 #translate3()
 

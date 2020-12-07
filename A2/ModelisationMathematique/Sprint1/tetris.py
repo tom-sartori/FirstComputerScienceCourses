@@ -16,12 +16,18 @@ bleu = [0, 0, 255];
 
 # On utilise le pixel comme unité, mais 
 # ce serait similaire avec une taille donnée. 
-fond = np.ones((4, 6, 3), dtype=np.uint8) * gris; # Image avec fond gris
+fond = np.ones((150, 300, 3), dtype=np.uint8) * gris; # Image avec fond gris
 
-fond[:, 0] = bleu; # Barre bleue de gauche. 
 
-fond [2, 4:] = vert; # S vert
-fond[3, 3:5] = vert; 
+fond[50:100, 50:100, :] = orange
+
+plt.imshow(fond)
+plt.show
+
+
+
+
+
 
 
 
@@ -57,6 +63,3 @@ def etape3 ():
     plt.show()
     
 
-etape1(); 
-etape2(); 
-etape3(); 

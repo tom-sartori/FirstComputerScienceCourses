@@ -15,20 +15,13 @@ plt.imshow (knight)
 plt.show()
 
 
-doubleHorizontal = np.block([[knight], [knight]]) 
-# doubleHorizontal = np.concatenate((knight, knight), axis=1)
-
-plt.imshow(doubleHorizontal)
-plt.show()
-
-
 doubleVertical = np.concatenate((knight, knight)) # axis = 0
+print(doubleVertical.shape)
 
 plt.imshow (doubleVertical)
 plt.show()
 
+doubleVertical = doubleVertical[::-1,:,:]
 
-quadruple = np.block([[doubleVertical], [doubleVertical]])
-
-plt.imshow (quadruple)
+plt.imshow (doubleVertical)
 plt.show()
