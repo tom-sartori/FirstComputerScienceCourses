@@ -1,0 +1,32 @@
+Protocole LoraWan
+permet la télécommunication à bas débit (radio) entre objets a faibles conso electrique. Infrastructure peu coûteuse. 20 km de portée. 
+
+Sockets 
+
+Socket serveur :
+	On initialise le socket avec les adresses voulues.
+	On fait une boucle infinie en attendant un message du client.
+	Si on recoit un message, alors on l'affiche.
+
+Socket client :
+    On prépare les adresses pour pouvoir créer le socket et se connecter au serveur.
+    On initialise le socket.
+    Le client fait la demande de connection avec le serveur.
+    Si acceptation, on peut envoyer des messages et mettre fin à la communication.
+
+L'ecriture du chat :
+    Adaptation des sockets fait avant. On modifie simplement pour que les deux cotés puissent recevoir et envoyer des messages.
+
+
+Le problème de ce serveur, est qu'il peut accepter plusieurs clients, mais qu'il ne peut communiquer qu'avec un à la fois.
+Ainsi, pour pouvoir parler à plusieurs clients en meme temps, il faut faire un fork. De ce fait, avec le processus
+fils, on continue à communiquer avec le client. Avec le père, on reste disponible à l'acceptation de nouveaux clients.
+On repète la même opération pour chaque nouveau client.
+Lorsqu'une la communication avec un client est finie, on stop le fils (exit(0)).
+
+
+
+Le port 80 permet de récupérer le html grâce à telnet.
+Telnet ne fonctionne pas sur mac, je ne peux donc pas vous donner plus d'informations.
+
+Le client envoie le GET et récupère la réponse en utilisant le socket.

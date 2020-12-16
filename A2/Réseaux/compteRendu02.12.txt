@@ -1,2 +1,0 @@
-Protocole LoraWan
-permet la télécommunication à bas débit (radio) entre objets a faibles conso electrique. Infrastructure peu coûteuse. 20 km de portée. 
