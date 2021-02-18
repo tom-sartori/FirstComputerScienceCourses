@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1> Code Examen Prog Fonctionnnelle</h1>
+<p>Veuillez saisir votre numero INE pour avoir le numéro du lot attribué pour vous</p>
+
+<input id='INE' type="text" value='INE'></input>
+<button onclick='getHash()' >Go</button>
+<div id='lot' />
+
+<script>
+  let distribution = ["  Q1-3  et  Q2-3  et  Exercice 4 (toutes les questions) ",
+"  Q1-4  et  Q2-4  et  Exercice 5 (toutes les questions) ",
+"  Q1-2  et  Q2-1  et  Exercice 5 (toutes les questions) ",
+"  Q1-4  et  Q2-3  et  Exercice 3 (toutes les questions) ",
+"  Q1-5  et  Q2-7  et  Exercice 3 (toutes les questions) ",
+"  Q1-4  et  Q2-2  et  Exercice 5 (toutes les questions) ",
+"  Q1-4  et  Q2-1  et  Exercice 6 (toutes les questions) ",
+"  Q1-1  et  Q2-6  et  Exercice 4 (toutes les questions) ",
+"  Q1-3  et  Q2-2  et  Exercice 5 (toutes les questions) ",
+"  Q1-3  et  Q2-6  et  Exercice 3 (toutes les questions) ",
+"  Q1-2  et  Q2-4  et  Exercice 3 (toutes les questions) ",
+"  Q1-6  et  Q2-5  et  Exercice 3 (toutes les questions) ",
+"  Q1-2  et  Q2-7  et  Exercice 4 (toutes les questions) ",
+"  Q1-5  et  Q2-5  et  Exercice 4 (toutes les questions) ",
+"  Q1-2  et  Q2-6  et  Exercice 3 (toutes les questions) ",
+"  Q1-2  et  Q2-5  et  Exercice 3 (toutes les questions) ",
+"  Q1-5  et  Q2-6  et  Exercice 4 (toutes les questions) ",
+"  Q1-1  et  Q2-1  et  Exercice 3 (toutes les questions) ",
+"  Q1-5  et  Q2-3  et  Exercice 5 (toutes les questions) ", 
+"  Q1-1  et  Q2-1  et  Exercice 5 (toutes les questions) ",
+"  Q1-4  et  Q2-2  et  Exercice 3 (toutes les questions) ",
+"  Q1-5  et  Q2-2  et  Exercice 6 (toutes les questions) ",
+"  Q1-6  et  Q2-2  et  Exercice 3 (toutes les questions) ",
+"  Q1-5  et  Q2-6  et  Exercice 5 (toutes les questions) ",
+"  Q1-4  et  Q2-1  et  Exercice 3 (toutes les questions) ",
+"  Q1-3  et  Q2-3  et  Exercice 5 (toutes les questions) ",
+"  Q1-2  et  Q2-2  et  Exercice 3 (toutes les questions) ",
+"  Q1-1  et  Q2-7  et  Exercice 4 (toutes les questions) ",
+"  Q1-1  et  Q2-2  et  Exercice 6 (toutes les questions) ",
+"  Q1-1  et  Q2-2  et  Exercice 5 (toutes les questions) "]
+
+
+function getHash()
+{
+    let hashCode = function(s) {
+    var hash = 0, i = 0, len = s.length;
+    while ( i < len ) {
+        hash  = ((hash << 5) - hash + s.charCodeAt(i++)) << 0;
+    }
+    return hash;
+};
+
+let ine = document.getElementById('INE')
+if(ine.value.length == 11) 
+{
+    let code  = Math.abs(hashCode(ine.value)%distribution.length)
+     
+    let msg = 'Vous devez répondre aux questions suivantes: <b>' + distribution[code] + '</b>' + '<br> '
+    msg += 'Bonne chance !'
+    document.getElementById('lot').innerHTML = msg
+}
+else {
+    alert('Code INE doit comporter 11 characters')
+    document.getElementById('lot').innerHTML = ''
+}
+}
+
+
+</script>
+
+
+</body>
+</html>

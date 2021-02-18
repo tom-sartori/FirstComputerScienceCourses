@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1> Code Examen Prog Repartie</h1>
+<p>Veuillez saisir votre numero INE(en minuscule) pour avoir les questions attribuées pour vous</p>
+
+<input id='INE' type="text" value='INE'></input>
+<button onclick='getHash()' >Go</button>
+<div id='lot' />
+
+<script>
+  let distribution = [ "Q1-5  et  Q1-8  et  Q6-2  et  Q4-1  et  Q2-2",
+  "Q1-2  et  Q1-3  et  Q2-3  et  Q6-3  et  Q3-3",
+  "Q1-1  et  Q1-6  et  Q5-4  et  Q3-1  et  Q2-1",
+  "Q1-7  et  Q1-4  et  Q4-5  et  Q6-2  et  Q5-2",
+  "Q1-5  et  Q1-4  et  Q5-6  et  Q4-5  et  Q2-1",
+  "Q1-1  et  Q1-9  et  Q5-7  et  Q2-3  et  Q4-3",
+  "Q1-1  et  Q1-6  et  Q2-1  et  Q4-4  et  Q3-2",
+  "Q1-8  et  Q1-5  et  Q3-1  et  Q6-2  et  Q5-5",
+  "Q1-5  et  Q1-9  et  Q3-3  et  Q6-3  et  Q4-4",
+  "Q1-3  et  Q1-1  et  Q3-3  et  Q2-2  et  Q4-2",
+  "Q1-1  et  Q1-5  et  Q2-2  et  Q4-1  et  Q3-2",
+  "Q1-2  et  Q1-1  et  Q6-1  et  Q5-7  et  Q2-2",
+  "Q1-9  et  Q1-3  et  Q5-5  et  Q2-3  et  Q6-1",
+  "Q1-9  et  Q1-6  et  Q5-2  et  Q2-2  et  Q3-1",
+  "Q1-8  et  Q1-1  et  Q6-3  et  Q5-3  et  Q4-4",
+  "Q1-4  et  Q1-3  et  Q2-2  et  Q6-1  et  Q4-1",
+  "Q1-9  et  Q1-2  et  Q5-6  et  Q6-1  et  Q3-3",
+  "Q1-7  et  Q1-2  et  Q2-3  et  Q3-1  et  Q6-1",
+  "Q1-6  et  Q1-3  et  Q4-2  et  Q3-2  et  Q5-4",
+  "Q1-6  et  Q1-9  et  Q3-3  et  Q2-3  et  Q4-3",
+  "Q1-9  et  Q1-2  et  Q2-3  et  Q3-2  et  Q5-1",
+  "Q1-6  et  Q1-2  et  Q6-3  et  Q2-3  et  Q5-6",
+  "Q1-5  et  Q1-4  et  Q3-3  et  Q4-2  et  Q6-2",
+  "Q1-4  et  Q1-1  et  Q5-3  et  Q3-2  et  Q6-1",
+  "Q1-8  et  Q1-4  et  Q3-3  et  Q2-2  et  Q5-4",
+  "Q1-4  et  Q1-9  et  Q5-3  et  Q3-1  et  Q4-2",
+  "Q1-5  et  Q1-9  et  Q3-1  et  Q5-4  et  Q6-3",
+  "Q1-7  et  Q1-4  et  Q5-1  et  Q4-4  et  Q2-2",
+  "Q1-4  et  Q1-9  et  Q6-2  et  Q4-3  et  Q3-3",
+  "Q1-6  et  Q1-3  et  Q3-1  et  Q6-3  et  Q4-1",
+  "Q1-1  et  Q1-8  et  Q6-2  et  Q2-1  et  Q3-1",
+  "Q1-9  et  Q1-4  et  Q2-2  et  Q4-5  et  Q5-2",
+  "Q1-4  et  Q1-6  et  Q5-4  et  Q2-1  et  Q4-5",
+  "Q1-4  et  Q1-5  et  Q5-3  et  Q3-3  et  Q4-3",
+  "Q1-4  et  Q1-3  et  Q6-1  et  Q4-1  et  Q3-2",
+  "Q1-7  et  Q1-6  et  Q3-2  et  Q2-1  et  Q5-7",
+  "Q1-6  et  Q1-2  et  Q3-3  et  Q2-2  et  Q6-2",
+  "Q1-2  et  Q1-1  et  Q3-3  et  Q6-3  et  Q4-3",
+
+  "Q1-9  et  Q1-3  et  Q4-1  et  Q3-3  et  Q5-7"]
+
+
+function getHash()
+{
+    let hashCode = function(s) {
+    var hash = 0, i = 0, len = s.length;
+    while ( i < len ) {
+        hash  = ((hash << 5) - hash + s.charCodeAt(i++)) << 0;
+    }
+    return hash;
+};
+
+let ine = document.getElementById('INE')
+if(ine.value.length == 11) 
+{
+    let code  = Math.abs(hashCode(ine.value)%distribution.length)
+     
+    let msg = 'Vous devez répondre aux questions suivantes: <b>' + distribution[code] + '</b>' + '<br> '
+    msg += 'Bonne chance !'
+    document.getElementById('lot').innerHTML = msg
+}
+else {
+    alert('Code INE doit comporter 11 characters')
+    document.getElementById('lot').innerHTML = ''
+}
+}
+
+
+</script>
+
+
+</body>
+</html>
