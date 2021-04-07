@@ -11,7 +11,7 @@ package TD3;
 final public class Matrix {
     public final int M;             // number of rows
     public final int N;             // number of columns
-    private final double[][] data;   // M-by-N array
+    public final double[][] data;   // M-by-N array
 
     // create M-by-N matrix of 0's
     public Matrix(int M, int N) {
@@ -100,7 +100,7 @@ final public class Matrix {
     }
 
     // return C = A * B
-    public Matrix times(Matrix B) {
+    public Matrix times0(Matrix B) {
         Matrix A = this;
         if (A.N != B.M)
             throw new RuntimeException("Illegal matrix dimensions.");
@@ -111,12 +111,12 @@ final public class Matrix {
             for (int j = 0; j < C.N; j++)
                 for (int k = 0; k < A.N; k++)
                     C.data[i][j] += (A.data[i][k] * B.data[k][j]);
-        System.out.println("temps1 : " + (System.currentTimeMillis() - t));
+        System.out.println("temps0 : " + (System.currentTimeMillis() - t) + "ms");
         return C;
     }
 
-    // return C = A * B
-    public Matrix times2(Matrix B) {
+    // Avec 4 Thread
+    public Matrix times1(Matrix B) {
         Matrix A = this;
         if (A.N != B.M)
             throw new RuntimeException("Illegal matrix dimensions.");
@@ -125,6 +125,8 @@ final public class Matrix {
 
         int x = (int)(C.M / 2);
         int y = (int)(C.N / 2);
+
+        long t = System.currentTimeMillis();
 
         Thread thread = new Thread() {
             public void run() {
@@ -138,40 +140,110 @@ final public class Matrix {
         Thread thread1 = new Thread() {
             public void run() {
                 // HD
+                //calculPartie(A, B, C, 0, x, y, C.N);
                 for (int i = 0; i < x; i++)
                     for (int j = y; j < C.N; j++)
                         for (int k = 0; k < A.N; k++)
                             C.data[i][j] += (A.data[i][k] * B.data[k][j]);
+
             }};
 
         Thread thread2 = new Thread() {
             public void run() {
                 // BD
+                //calculPartie(A, B, C, x, C.M, y, C.N);
                 for (int i = x; i < C.M; i++)
                     for (int j = y; j < C.N; j++)
                         for (int k = 0; k < A.N; k++)
                             C.data[i][j] += (A.data[i][k] * B.data[k][j]);
+
             }};
 
         Thread thread3 = new Thread() {
             public void run() {
                 // BG
+                //calculPartie(A, B, C, x, C.M, 0, y);
                 for (int i = x; i < C.M; i++)
                     for (int j = 0; j < y; j++)
                         for (int k = 0; k < A.N; k++)
                             C.data[i][j] += (A.data[i][k] * B.data[k][j]);
             }};
 
-        long t = System.currentTimeMillis();
 
         thread.start();
         thread1.start();
         thread2.start();
         thread3.start();
 
-        System.out.println("temps2 : " + (System.currentTimeMillis() - t));
+        while (thread.isAlive() && thread1.isAlive() && thread2.isAlive() && thread3.isAlive()) {}
+        System.out.println("temps1 : " + (System.currentTimeMillis() - t) + "ms");
 
         return C;
+    }
+
+    // Avec fonction générique
+    public Matrix times2 (Matrix B) {
+        Matrix A = this;
+        if (A.N != B.M)
+            throw new RuntimeException("Illegal matrix dimensions.");
+
+        Matrix C = new Matrix(A.M, B.N);
+
+        int x = (int)(C.M / 2);
+        int y = (int)(C.N / 2);
+
+        long t = System.currentTimeMillis();
+
+        Thread thread = new Thread(()-> calculPartie(A, B, C, 0, x, 0, y));
+        Thread thread1 = new Thread(()-> calculPartie(A, B, C, 0, x, y, C.N));
+        Thread thread2 = new Thread(()-> calculPartie(A, B, C, x, C.M, y, C.N));
+        Thread thread3 = new Thread(()-> calculPartie(A, B, C, x, C.M, 0, y));
+
+        thread.start();
+        thread1.start();
+        thread2.start();
+        thread3.start();
+
+        while (thread.isAlive() && thread1.isAlive() && thread2.isAlive() && thread3.isAlive()) {}
+        System.out.println("temps2 : " + (System.currentTimeMillis() - t) + "ms");
+
+        return C;
+    }
+
+    // Avec classe Runable
+    public Matrix times3 (Matrix B) {
+        Matrix A = this;
+        if (A.N != B.M)
+            throw new RuntimeException("Illegal matrix dimensions.");
+
+        Matrix C = new Matrix(A.M, B.N);
+
+        int x = (int)(C.M / 2);
+        int y = (int)(C.N / 2);
+
+        long t = System.currentTimeMillis();
+
+        Thread thread = new Thread(new MatrixActivite(A, B, C, 0, x, 0, y));
+        Thread thread1 = new Thread(new MatrixActivite(A, B, C, 0, x, y, C.N));
+        Thread thread2 = new Thread(new MatrixActivite(A, B, C, x, C.M, y, C.N));
+        Thread thread3 = new Thread(new MatrixActivite(A, B, C, x, C.M, 0, y));
+
+        thread.start();
+        thread1.start();
+        thread2.start();
+        thread3.start();
+
+        while (thread.isAlive() && thread1.isAlive() && thread2.isAlive() && thread3.isAlive()) {}
+        System.out.println("temps3 : " + (System.currentTimeMillis() - t) + "ms");
+
+        return C;
+    }
+
+    public void calculPartie (Matrix A, Matrix B, Matrix C, int startI, int endI, int startJ, int endJ) {
+        for (int i = startI; i < endI; i++)
+            for (int j = startJ; j < endJ; j++)
+                for (int k = 0; k < A.N; k++)
+                    C.data[i][j] += (A.data[i][k] * B.data[k][j]);
     }
 
     // print matrix to standard output
@@ -192,33 +264,30 @@ final public class Matrix {
     // test client
     public static void main(String[] args) {
 
-        Matrix A = Matrix.random(150, 100);
+        Matrix A = Matrix.random(1500, 1000);
         //A.show();
         System.out.println();
 
-        Matrix B = Matrix.random(100, 200);
+        Matrix B = Matrix.random(1000, 2000);
         //B.show();
         System.out.println();
 
 
-        Matrix C = A.times(B);
-        System.out.println();
-        Matrix D = A.times2(B);
+        //A.times0(B);  // 21837ms
+        A.times1(B);    // 6616ms
+        A.times2(B);    // 6018ms
+        A.times3(B);    // 6571ms
 
 
+        /*
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         System.out.println(C.eq(D));
-
-        /*
-        Matrix C = A.times2(B);
-        C.show();
-        System.out.println();
-
          */
+
 
         Matrix.showComp();
         System.out.println();
